@@ -1,0 +1,12 @@
+(This is a comment)
+(benchmark1 will ask user how many values they want to add,
+then the program will add the values as they are entered and return the total sum)
+
+|Wipeout
+  >Listen R1 (How many times to iterate)
+  @Loop begin R1
+->begin  &Sum temp
+  <Say temp
+  !Stop
+
+temp Deka 0 (integer variable)
