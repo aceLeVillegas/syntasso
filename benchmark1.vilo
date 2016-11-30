@@ -3,14 +3,10 @@
 then the program will add the values as they are entered and return the total sum)
 
 |Wipeout
-  <Say "Enter how many values would you like to enter: "
-  >Listen R1
-begin, ˜Load R1
-  ?SkipCond 400
-  $Jump end
-  >Listen sum
-  +Add total sum
-  -Sub 1 R1 (This number will decrease every time the user enters a value)
-  @Loop begin
-end, <Say total
+  >Listen R1 (How many times to iterate)
+  @Loop begin R1
+->begin  &Sum temp
+  <Say temp
   !Stop
+
+temp Deka 0 (integer variable)
