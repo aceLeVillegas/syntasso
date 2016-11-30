@@ -1,0 +1,16 @@
+(This is a comment)
+(benchmark1 will ask user how many values they want to add,
+then the program will add the values as they are entered and return the total sum)
+
+|Wipeout
+  <Say "Enter how many values would you like to enter: "
+  >Listen R1
+begin, ˜Load R1
+  ?SkipCond 400
+  $Jump end
+  >Listen sum
+  +Add total sum
+  -Sub 1 R1 (This number will decrease every time the user enters a value)
+  @Loop begin
+end, <Say total
+  !Stop
