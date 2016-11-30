@@ -1,0 +1,96 @@
+(All comments will be denoted by "()" and will be written within the parenthesis)
+
+(Variables: )
+(ALL Variables names must be in lower case )
+(Integer values will be identified by "Deka" then the value)
+(Chars values will be identified by "Epis" then a letter)
+(String values will be identified by "Minyma" then a string)
+
+(Syntax error will be identified by "Koino")
+
+(***Provide a list of given registers and their names)
+alpha (0001)
+beta  (0010)
+gamma (0011)
+delta (0100)
+epsilon (0101)
+zeta (0110)
+eta (0111)
+theta (1000)
+iota (1001)
+kappa (1010)
+lambda (1011)
+mu (1100)
+sigma (1101)
+omicron (1110)
+omega (1111)
+
+
+(Grabs input then stores input in the desired register)
+(This command will ask for input and will add it to the desired register)
+32(100000)
+&Sum (Holds only one register)
+
+(Will be able to add two numbers and will save it in the last register stated)
+31(011111)
++Add (Hold up to 3 register or 1 number and 2 registers)
+
+(Will be able to sub two numbers and will save it in the last register stated)
+30(011110)
+-Sub
+
+(Will be able to multiply two numbers and will save it in the last register stated)
+29(011101)
+*Mult
+
+(Will be able to divide two numbers and will save it in the last register stated)
+28(011100)
+/Div
+
+(Will be able to take the modulus of two numbers and will save it in the last register stated)
+27(011011)
+%Mod
+
+(Will be able to raise to the power given of a number and will save it in the last register stated)
+26(011010)
+^Pow (First value is the base, Second is the power raised, Third the register saved in)
+
+
+
+(Loads the value that is in the given register to the accumulator)\
+25(011001)
+~Load (First what register the value will be stored in)
+
+(Stores the value that is in the accumulator into the given register)
+24(011000)
+#Store
+
+(Will run though the given instructions followed)
+(if the line read in starts with -> it will signify that it is the start/end of the loop)
+23(010111)
+@Loop (First word that will indicate the start, Second word will indicate the end, Third is for how many iterations of commands wanted)
+(can have only 2 values if only repeating one line )
+
+()
+22(010110)
+>Listen(First what register the value will be stored in)
+
+()
+21(010101)
+<Say(First what register the value will be outputting from)
+
+(Will check if the accumulator has either a negative, positive, or zero value )
+20(010100)
+?Skip(Choices for values: Neg , Pos , Zero)
+
+()
+19(010011)
+$Jump(Word for where you want to read commands in the list)
+
+(Sets all register values to zero)
+18(010010)
+|WipeOut
+
+(Will stop the program)
+(000000)
+!Stop
