@@ -57,7 +57,7 @@ omega (1111)
 26(011010)
 ^Pow (First value is the base, Second is the power raised, Third the register saved in)
 
-(Loads the value that is in the given register to the accumulator)\
+(Loads the value that is in the given register to the accumulator)
 25(011001)
 ~Fortono (First what register the value will be stored in)
 
