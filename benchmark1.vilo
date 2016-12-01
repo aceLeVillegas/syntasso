@@ -3,7 +3,8 @@
 then the program will add the values as they are entered and return the total sum)
 
 |Wipeout
-  >Listen R1 (How many times to iterate)
+  >Listen R1 (How many times to iterate)  010110 00000011
+  Kyklo  Begin R1                        010111 (change to ascii val) 00000011                            
   @Loop begin R1
 ->begin  &Sum temp
   <Say temp
