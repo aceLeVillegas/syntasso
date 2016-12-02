@@ -1,44 +1,14 @@
 #include "Syntasso.h"
+#include <iostream>
 #include <string>
-#include <sstream>
+#include <cstdlib>
 #include <fstream>
+#include <sstream>
 using namespace std;
-Syntasso::Syntasso(){
 
-}
-
-int Syntasso::stringtoAscii(string& word)
+int main()
 {
-  int length = word.length();
-  int ascii = 0;
-  for(int i = 0; i < length; ++i)
-  {
-    ascii += (int)word[i];
-  }
-  return ascii;
-} // end stringtoAscii
-
-string Syntasso::asciiToBin(int& number)
-{
-  int remainder = 0;
-  int base = 2;
-  std::string bin = "";
-  std::string reverse = "";
-  while(decimal > 0)
-  {
-    remainder = decimal % base;
-    decimal = decimal / base;
-    bin += '0' + remainder;
-
-  } // end while
-  for(int i = bin.length(); i >= 0; i--)
-    reverse += bin[i];
-
-  return reverse;
-} // end asciiToBin
-
-void Syntasso::readMnemonic(ifstream& inFile)
-{
+  ifstream inFile("Commands.vilo");
   string line;
   if(inFile.is_open())
   {
@@ -67,4 +37,5 @@ void Syntasso::readMnemonic(ifstream& inFile)
     cout << "Unable to open file.\n";
     exit(1);
   }
-} // end readMnemonic
+  return EXIT_SUCCESS;
+}// end main
