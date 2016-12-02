@@ -132,3 +132,19 @@ Syntasso::Syntasso(){
 
 
 }
+
+bool checkSyntax(std::string word, int parameters){
+
+
+}
+bool searchPar(std::string key){
+
+    for(unsigned int i = 0; i < )
+
+
+}
+bool searchBin(std::string key){
+
+
+
+}
