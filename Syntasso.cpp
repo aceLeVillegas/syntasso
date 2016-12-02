@@ -73,65 +73,67 @@ Syntasso::Syntasso(){
     numPar[0].first = "&Sum";
     numPar[0].second = 1;
     numPar[1].first = "+Add";
-    numPar[1].second = "011111";
+    numPar[1].second = 3;
     numPar[2].first = "-Sub";
-    numPar[2].second = "011110";
+    numPar[2].second = 3;
     numPar[3].first = "*Mult";
-    numPar[3].second = "011101";
+    numPar[3].second = 3;
     numPar[4].first = "/Div";
-    numPar[4].second = "011100";
+    numPar[4].second = 3;
     numPar[5].first = "%Mod";
-    numPar[5].second = "011011";
+    numPar[5].second = 3;
     numPar[6].first = "^Pow";
-    numPar[6].second = "011010";
+    numPar[6].second = 3;
     numPar[7].first = "~Fortono";
-    numPar[7].second = "011001";
+    numPar[7].second = 1;
     numPar[8].first = "#Kryvo";
-    numPar[8].second = "011000";
+    numPar[8].second = 1;
     numPar[9].first = "@Kyklo";
-    numPar[9].second = "010111";
+    numPar[9].second = 2;
     numPar[10].first = ">Ako";
-    numPar[10].second = "010110";
+    numPar[10].second = 1;
     numPar[11].first = "<Lego";
-    numPar[11].second = "010101";
+    numPar[11].second = 1;
     numPar[12].first = "?Lykis";
-    numPar[12].second = "010100";
+    numPar[12].second = 1;
     numPar[13].first = "$Alma";
-    numPar[13].second = "010011";
+    numPar[13].second = 1;
     numPar[14].first = "|Exa";
-    numPar[14].second = "010010";
+    numPar[14].second = 0;
     numPar[15].first = "!Stasi";
-    numPar[15].second = "000000";
+    numPar[15].second = 0;
+    // The following registers are going to be assigned an index in memory array
+    // starting at index 900 to 914
     numPar[16].first = "alpha";
-    numPar[16].second = 0;
+    numPar[16].second = 900;
     numPar[17].first = "beta";
-    numPar[17].second = 0;
+    numPar[17].second = 901;
     numPar[18].first = "gamma";
-    numPar[18].second = 0;
+    numPar[18].second = 902;
     numPar[19].first = "delta";
-    numPar[19].second = "0100";
+    numPar[19].second = 903;
     numPar[20].first = "epsilon";
-    numPar[20].second = "0101";
+    numPar[20].second = 904;
     numPar[21].first = "zeta";
-    numPar[21].second = "0110";
+    numPar[21].second = 905;
     numPar[22].first = "eta";
-    numPar[22].second = "0111";
+    numPar[22].second = 906;
     numPar[23].first = "theta";
-    numPar[23].second = "1000";
+    numPar[23].second = 907;
     numPar[24].first = "iota";
-    numPar[24].second = "1001";
+    numPar[24].second = 908;
     numPar[25].first = "kappa";
-    numPar[25].second = "1010";
+    numPar[25].second = 909;
     numPar[26].first = "lambda";
-    numPar[26].second = "1011";
+    numPar[26].second = 910;
     numPar[27].first = "mu";
-    numPar[27].second = "1100";
+    numPar[27].second = 911;
     numPar[28].first = "sigma";
-    numPar[28].second = "1101";
+    numPar[28].second = 912;
     numPar[29].first = "omicron";
-    numPar[29].second = "1110";
+    numPar[29].second = 913;
     numPar[30].first = "omega";
-    numPar[30].second = "1111";
+    numPar[30].second = 914;
 
 
 }
@@ -166,7 +168,7 @@ string Syntasso::asciiToBin(int& number)
   return reverse;
 } // end asciiToBin
 
-void Syntasso::readMnemonic(ifstream& inFile)
+void Syntasso::readMnemonic(std::ifstream& inFile)
 {
   string line;
   if(inFile.is_open())
@@ -197,3 +199,36 @@ void Syntasso::readMnemonic(ifstream& inFile)
     exit(1);
   }
 } // end readMnemonic
+
+
+void Syntasso::readBin(std::ifstream& inFile)
+{
+  string line;
+  if(inFile.is_open())
+  {
+    cout << "Successfully opened file!" << endl;
+    while(getline(inFile, line, '\n'))
+    {
+      std::stringstream   linestream(line);
+      std::string         value;
+      // Ignore if the line is a comment or dummy variables
+      if(line.find("#") == 0 || line.find("rowid") == 0)
+        continue;
+      else
+      {
+        while(getline(linestream,value,','))
+        {
+          cout << "test" << endl;
+        }
+
+      }
+    } // end while
+    // close the file before exiting
+    inFile.close();
+  }
+  else
+  {
+    cout << "Unable to open file.\n";
+    exit(1);
+  }
+} // end readBin
