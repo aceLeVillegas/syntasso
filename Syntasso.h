@@ -8,6 +8,9 @@
 class Syntasso{
 
     public:
+<<<<<<< HEAD
+      
+=======
         Syntasso();
         bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
         bool searchPar(std::string key);
@@ -15,6 +18,7 @@ class Syntasso{
 
 
 
+>>>>>>> 7b4a1f01f446f49446c3b763d384c45e592b9bd7
 
     private:
       int accumulator; // accumulator register
