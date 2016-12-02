@@ -2,10 +2,8 @@
 (benchmark1 will ask user how many values they want to add)
 (then the program will add the values as they are entered and return the total sum)
 
-|Wipeout
->Listen R1
-Kyklo  Begin R1
-@Loop begin R2
-->begin  &Sum
-<Say R3
-!Stop
+|Exa
+>Ako alpha
+@Kyklo  Begin alpha
+<Lego beta
+!Stasi
