@@ -1,4 +1,8 @@
 #include "Syntasso.h"
+#include <string>
+#include <sstream>
+#include <fstream>
+using namespace std;
 
 Syntasso::Syntasso(){
 
@@ -133,18 +137,122 @@ Syntasso::Syntasso(){
 
 }
 
-bool checkSyntax(std::string word, int parameters){
+bool Syntasso::checkSyntax(std::string word, int whiteSpace){
+
+    if(whiteSpace == 0){
+
+        return checkPar(word);
+    }
+    if(whiteSpace == 1 && parameters >= whiteSpace){
+
+        if(searchBin(word)){
+
+            return true;
+        }
+        else if((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z')){
+
+            return true
+        }
+        else{
+
+            return false;
+        }// end else
+    }// end if
+    else{
+
+        return false; 
+    }
 
 
 }
-bool searchPar(std::string key){
+bool Syntasso::searchPar(std::string key){
 
-    for(unsigned int i = 0; i < )
+    for(unsigned int i = 0; i < CAPACITY; i++){
+
+        if(key == numPar[i].first){
+
+            parameters = numPar[i].second;
+
+            return true;
+        }
+    }
+    return false;
 
 
 }
-bool searchBin(std::string key){
+bool Syntasso::searchBin(std::string key){
 
+    for(unsigned int i = 0; i < CAPACITY; i++){
 
+        if(key == binCode[i].first){
+
+            return true;
+        }
+    }
+    return false;
 
 }
+
+int Syntasso::stringtoAscii(string& word)
+{
+  int length = word.length();
+  int ascii = 0;
+  for(int i = 0; i < length; ++i)
+  {
+    ascii += (int)word[i];
+  }
+  return ascii;
+} // end stringtoAscii
+
+string Syntasso::asciiToBin(int& number)
+{
+  int remainder = 0;
+  int base = 2;
+  std::string bin = "";
+  std::string reverse = "";
+  while(decimal > 0)
+  {
+    remainder = decimal % base;
+    decimal = decimal / base;
+    bin += '0' + remainder;
+
+  } // end while
+  for(int i = bin.length(); i >= 0; i--)
+    reverse += bin[i];
+
+  return reverse;
+} // end asciiToBin
+
+void Syntasso::readMnemonic(ifstream& inFile)
+{
+  int whiteSpace = 0;
+  string line;
+  if(inFile.is_open())
+  {
+    cout << "Successfully opened file!" << endl;
+    while(getline(inFile, line, '\n'))
+    {
+      std::stringstream   linestream(line);
+      std::string         value;
+      // Ignore if the line is a comment or dummy variables
+      if(line.find("(") == 0)
+        continue;
+      else
+      {
+        while(getline(linestream,value, " " ))
+        {
+          cout << "test" << endl;
+        }
+
+      }
+    } // end while
+    // close the file before exiting
+    inFile.close();
+  }
+  else
+  {
+    cout << "Unable to open file.\n";
+    exit(1);
+  }
+} // end readMnemonic
+>>>>>>> 612c23125574b22df34949887040c890adeaa591

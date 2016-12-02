@@ -5,15 +5,30 @@
 #include <string>
 #include <algorithm>
 
+
 class Syntasso{
 
     public:
 
         const int CAPACITY = 30;
         Syntasso();
-        bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
+        bool checkSyntax(std::string word, int whiteSpace); // Sarah has Sudo Code
         bool searchPar(std::string key);
         bool searchBin(std::string key);
+        bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
+
+        int stringtoAscii(std::string& word); //completed
+        // Summary: Function will take a string that will be converted to its ascii value.
+
+        std::string asciiToBin(int& number); // completed
+        // Summary: Function will take an integer and return a string equvalent to its binary value.
+
+        void readBin(std::ifstream& fin);
+        // Summary: Function will read a text file with binary values to be passed into the assembly simulator.
+
+        void readMnemonic(std::ifstream& inFile); // TODO: waiting for checkSyntax Function
+        // Summary: Function will read a text file with mnemonic code to be converted into binary
+        // code and write out into a new text file.
 
 
 
