@@ -3,6 +3,7 @@
 #include <sstream>
 #include <fstream>
 using namespace std;
+
 Syntasso::Syntasso(){
 
     binCode[0].first = "&Sum";
@@ -138,6 +139,62 @@ Syntasso::Syntasso(){
 
 }
 
+bool Syntasso::checkSyntax(std::string word, int whiteSpace){
+
+    if(whiteSpace == 0){
+
+        return checkPar(word);
+    }
+    if(whiteSpace == 1 && parameters >= whiteSpace){
+
+        if(searchBin(word)){
+
+            return true;
+        }
+        else if((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z')){
+
+            return true
+        }
+        else{
+
+            return false;
+        }// end else
+    }// end if
+    else{
+
+        return false;
+    }
+
+
+}
+bool Syntasso::searchPar(std::string key){
+
+    for(unsigned int i = 0; i < CAPACITY; i++){
+
+        if(key == numPar[i].first){
+
+            parameters = numPar[i].second;
+
+            return true;
+        }
+    }
+    return false;
+
+
+}
+bool Syntasso::searchBin(std::string key){
+
+    for(unsigned int i = 0; i < CAPACITY; i++){
+
+        if(key == binCode[i].first){
+
+            return true;
+        }
+    }
+    return false;
+
+}
+
 int Syntasso::stringtoAscii(string& word)
 {
   int length = word.length();
@@ -170,6 +227,7 @@ string Syntasso::asciiToBin(int& number)
 
 void Syntasso::readMnemonic(std::ifstream& inFile)
 {
+  int whiteSpace = 0;
   string line;
   if(inFile.is_open())
   {
@@ -179,11 +237,11 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
       std::stringstream   linestream(line);
       std::string         value;
       // Ignore if the line is a comment or dummy variables
-      if(line.find("#") == 0 || line.find("rowid") == 0)
+      if(line.find("(") == 0)
         continue;
       else
       {
-        while(getline(linestream,value,','))
+        while(getline(linestream,value, " " ))
         {
           cout << "test" << endl;
         }
@@ -199,6 +257,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
     exit(1);
   }
 } // end readMnemonic
+
 
 
 void Syntasso::readBin(std::ifstream& inFile)

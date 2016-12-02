@@ -10,8 +10,9 @@ class Syntasso{
 
     public:
 
+        const int CAPACITY = 30;
         Syntasso();
-        bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
+        bool checkSyntax(std::string word, int whiteSpace); // Sarah has Sudo Code
         bool searchPar(std::string key);
         bool searchBin(std::string key);
         bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
@@ -40,8 +41,8 @@ class Syntasso{
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
       int parameters;
-      pair<std::string, std::string> binCode[30];
-      pair<std::string, int> numPar[30];
+      pair<std::string, std::string> binCode[CAPACITY];
+      pair<std::string, int> numPar[CAPACITY];
 
 
 
