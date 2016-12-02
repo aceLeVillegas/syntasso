@@ -143,6 +143,7 @@ bool Syntasso::checkSyntax(std::string word, int whiteSpace){
 
         return checkPar(word);
     }
+    // to search and see if the parameters are registers, numbers, or words
     if(whiteSpace == 1 && parameters >= whiteSpace){
 
         if(searchBin(word)){
@@ -160,7 +161,7 @@ bool Syntasso::checkSyntax(std::string word, int whiteSpace){
     }// end if
     else{
 
-        return false; 
+        return false;
     }
 
 
@@ -255,4 +256,3 @@ void Syntasso::readMnemonic(ifstream& inFile)
     exit(1);
   }
 } // end readMnemonic
->>>>>>> 612c23125574b22df34949887040c890adeaa591
