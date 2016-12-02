@@ -2,6 +2,8 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <iostream>
+#include <cstdlib>
 using namespace std;
 
 Syntasso::Syntasso(){
@@ -139,12 +141,13 @@ Syntasso::Syntasso(){
 
 }
 
-bool Syntasso::checkSyntax(std::string word, int whiteSpace){
+bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
     if(whiteSpace == 0){
 
-        return checkPar(word);
+        return searchPar(word);
     }
+    // to search and see if the parameters are registers, numbers, or words
     if(whiteSpace == 1 && parameters >= whiteSpace){
 
         if(searchBin(word)){
@@ -153,7 +156,7 @@ bool Syntasso::checkSyntax(std::string word, int whiteSpace){
         }
         else if((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z')){
 
-            return true
+            return true;
         }
         else{
 
@@ -206,7 +209,7 @@ int Syntasso::stringtoAscii(string& word)
   return ascii;
 } // end stringtoAscii
 
-string Syntasso::asciiToBin(int& number)
+string Syntasso::asciiToBin(int& decimal)
 {
   int remainder = 0;
   int base = 2;
@@ -234,6 +237,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
     cout << "Successfully opened file!" << endl;
     while(getline(inFile, line, '\n'))
     {
+      whiteSpace = 0;
       std::stringstream   linestream(line);
       std::string         value;
       // Ignore if the line is a comment or dummy variables
@@ -241,9 +245,12 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
         continue;
       else
       {
-        while(getline(linestream,value, " " ))
+        while(getline(linestream,value, ' ' ))
+
         {
-          cout << "test" << endl;
+          cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+            << "whiteSpace: " << whiteSpace << endl;
+          whiteSpace++;
         }
 
       }
@@ -257,37 +264,3 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
     exit(1);
   }
 } // end readMnemonic
-
-
-
-void Syntasso::readBin(std::ifstream& inFile)
-{
-  string line;
-  if(inFile.is_open())
-  {
-    cout << "Successfully opened file!" << endl;
-    while(getline(inFile, line, '\n'))
-    {
-      std::stringstream   linestream(line);
-      std::string         value;
-      // Ignore if the line is a comment or dummy variables
-      if(line.find("#") == 0 || line.find("rowid") == 0)
-        continue;
-      else
-      {
-        while(getline(linestream,value,','))
-        {
-          cout << "test" << endl;
-        }
-
-      }
-    } // end while
-    // close the file before exiting
-    inFile.close();
-  }
-  else
-  {
-    cout << "Unable to open file.\n";
-    exit(1);
-  }
-} // end readBin

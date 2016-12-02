@@ -8,8 +8,14 @@ using namespace std;
 
 int main()
 {
-  ifstream inFile("Commands.vilo");
-  string line;
+
+  ifstream inFile("benchmark1.vilo");
+  //string line;
+  Syntasso test;
+
+  test.readMnemonic(inFile);
+  /*
+  int whiteSpace = 0;
   if(inFile.is_open())
   {
     cout << "Successfully opened file!" << endl;
@@ -18,18 +24,19 @@ int main()
       std::stringstream   linestream(line);
       std::string         value;
       // Ignore if the line is a comment or dummy variables
-      if(line.find("#") == 0 || line.find("rowid") == 0)
+      if(line.find("(") == 0)
         continue;
       else
       {
-        while(getline(linestream,value,','))
+        while(getline(linestream,value, " "))
         {
-          cout << "test" << endl;
+          cout << test.checkSyntax(value) << endl;
         }
 
       }
     } // end while
     // close the file before exiting
+
     inFile.close();
   }
   else
@@ -37,5 +44,6 @@ int main()
     cout << "Unable to open file.\n";
     exit(1);
   }
+  */
   return EXIT_SUCCESS;
 }// end main

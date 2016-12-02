@@ -10,17 +10,16 @@ class Syntasso{
 
     public:
 
-        const int CAPACITY = 30;
+        static const std::size_t CAPACITY = 30;
         Syntasso();
-        bool checkSyntax(std::string word, int whiteSpace); // Sarah has Sudo Code
+        bool checkSyntax(std::string word, int &whiteSpace);
         bool searchPar(std::string key);
         bool searchBin(std::string key);
-        bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
 
         int stringtoAscii(std::string& word); //completed
         // Summary: Function will take a string that will be converted to its ascii value.
 
-        std::string asciiToBin(int& number); // completed
+        std::string asciiToBin(int& decimal); // completed
         // Summary: Function will take an integer and return a string equvalent to its binary value.
 
         void readBin(std::ifstream& fin);
@@ -41,8 +40,8 @@ class Syntasso{
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
       int parameters;
-      pair<std::string, std::string> binCode[CAPACITY];
-      pair<std::string, int> numPar[CAPACITY];
+      std::pair<std::string, std::string> binCode[CAPACITY];
+      std::pair<std::string, int> numPar[CAPACITY];
 
 
 
