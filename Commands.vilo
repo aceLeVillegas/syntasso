@@ -60,11 +60,11 @@ omega (1111)
 
 (Loads the value that is in the given register to the accumulator)
 25(011001)
-~Fortono (First what register the value will be stored in)
+~Fortono (First value is where the register will be stored in)
 
 (Stores the value that is in the accumulator into the given register)
 24(011000)
-#Kryvo
+#Kryvo (First value is where the register will be stored in)
 
 (Will run though the given instructions followed)
 (if the line read in starts with -> it will signify that it is the start/end of the loop)
@@ -74,11 +74,11 @@ omega (1111)
 
 (Take in a value from )
 22(010110)
->Ako (First what register the value will be stored in)
+>Ako (First value is where the register will be stored in)
 
 (Displays to the screen what is in the register)
 21(010101)
-<Lego (First what register the value will be outputting from)
+<Lego (First value is where the register will be outputting from)
 
 (Will check if the accumulator has either a negative, positive, or zero value )
 20(010100)
