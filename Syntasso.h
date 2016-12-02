@@ -7,7 +7,7 @@
 class Syntasso{
 
     public:
-
+      
 
     private:
       int accumulator; // accumulator register
