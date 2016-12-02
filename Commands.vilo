@@ -11,6 +11,7 @@
 (***Provide a list of given registers and their names)
 alpha (pointer type only)(0001)
 beta  (pointer type only)(0010)
+(Registers below can hold a string or letter value)
 gamma (0011)
 delta (0100)
 epsilon (0101)
