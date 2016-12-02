@@ -2,11 +2,16 @@
 #define SYNTASSO_H
 
 #include <cstdlib>
+#include <string>
+#include <algothrim>
 
 
 class Syntasso{
 
     public:
+        Syntasso();
+        bool checkSyntax(string word, int parameters); // Sarah has Sudo Code
+        
 
 
     private:
@@ -17,9 +22,8 @@ class Syntasso{
       int operand; // memory location of opCode being acted on
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
-      char code[8];
-      char com[8];
-      bool hex;
+      int parameters;
+
 
 };
 #endif
