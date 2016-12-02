@@ -3,15 +3,17 @@
 
 #include <cstdlib>
 #include <string>
-#include <algothrim>
-
+#include <algorithm>
 
 class Syntasso{
 
     public:
         Syntasso();
-        bool checkSyntax(string word, int parameters); // Sarah has Sudo Code
-        
+        bool checkSyntax(std::string word, int parameters); // Sarah has Sudo Code
+        bool searchPar(std::string key);
+        bool searchBin(std::string key);
+
+
 
 
     private:
@@ -23,6 +25,9 @@ class Syntasso{
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
       int parameters;
+      pair<std::string, std::string> binCode[31];
+      pair<std::string, int> numPar[31];
+
 
 
 };

@@ -2,4 +2,92 @@
 
 Syntasso::Syntasso(){
 
+    binCode[0].first =
+    binCode[0].second =
+    binCode[1].first =
+    binCode[1].second =
+    binCode[2].first =
+    binCode[2].second =
+    binCode[3].first =
+    binCode[3].second =
+    binCode[4].first =
+    binCode[4].second =
+    binCode[5].first =
+    binCode[5].second =
+    binCode[6].first =
+    binCode[6].second =
+    binCode[7].first =
+    binCode[7].second =
+    binCode[8].first =
+    binCode[8].second =
+    binCode[9].first =
+    binCode[9].second =
+    binCode[10].first =
+    binCode[10].second =
+    binCode[11].first =
+    binCode[11].second =
+    binCode[12].first =
+    binCode[12].second =
+    binCode[13].first =
+    binCode[13].second =
+    binCode[14].first =
+    binCode[14].second =
+    binCode[15].first =
+    binCode[15].second =
+    binCode[16].first =
+    binCode[16].second =
+    binCode[17].first =
+    binCode[17].second =
+    binCode[18].first =
+    binCode[18].second =
+    binCode[19].first =
+    binCode[19].second =
+    binCode[20].first =
+    binCode[20].second =
+    binCode[21].first =
+    binCode[21].second =
+    binCode[22].first =
+    binCode[22].second =
+    binCode[23].first =
+    binCode[23].second =
+    binCode[24].first =
+    binCode[24].second =
+    binCode[25].first =
+    binCode[25].second =
+    binCode[26].first =
+    binCode[26].second =
+    binCode[27].first =
+    binCode[27].second =
+    binCode[28].first =
+    binCode[28].second =
+    binCode[29].first =
+    binCode[29].second =
+    binCode[30].first =
+    binCode[30].second =
+    binCode[31].first =
+    binCode[31].second =
+
+
+    numPar[0].first =
+    numPar[0].second =
+    numPar[1].first =
+    numPar[1].second =
+    numPar[2].first =
+    numPar[2].second =
+    numPar[3].first =
+    numPar[3].second =
+    numPar[4].first =
+    numPar[4].second =
+    numPar[5].first =
+    numPar[5].second =
+    numPar[6].first =
+    numPar[6].second =
+    numPar[7].first =
+    numPar[7].second =
+    numPar[8].first =
+    numPar[8].second =
+    numPar[9].first =
+    numPar[9].second =  
+
+
 }
