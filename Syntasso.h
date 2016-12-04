@@ -25,9 +25,15 @@ class Syntasso{
         void readBin(std::ifstream& fin);
         // Summary: Function will read a text file with binary values to be passed into the assembly simulator.
 
-        void readMnemonic(std::ifstream& inFile); // TODO: waiting for checkSyntax Function
+        void readMnemonic(std::ifstream& inFile);
         // Summary: Function will read a text file with mnemonic code to be converted into binary
         // code and write out into a new text file.
+
+        void fillCommandOrder(string command);
+        // Summary: Function will take in the binary representation of the command and store the commands in commandOrder[]
+
+        void performCommand(int decimal, string line);
+        // Summary: Takes in the binary representation of the command and the lne read in from the binary file then performs the specific operation. 
 
 
 
@@ -42,6 +48,7 @@ class Syntasso{
       int parameters;
       std::pair<std::string, std::string> binCode[CAPACITY];
       std::pair<std::string, int> numPar[CAPACITY];
+      int commandOrder[CAPACITY];
 
 
 

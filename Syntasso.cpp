@@ -8,6 +8,7 @@ using namespace std;
 
 Syntasso::Syntasso(){
 
+    // Binary representation for each command
     binCode[0].first = "&Sum";
     binCode[0].second = "100000";
     binCode[1].first = "+Add";
@@ -72,7 +73,7 @@ Syntasso::Syntasso(){
     binCode[30].second = "1111";
 
 
-
+    // How many parameters are allowed for each command
     numPar[0].first = "&Sum";
     numPar[0].second = 1;
     numPar[1].first = "+Add";
@@ -139,6 +140,12 @@ Syntasso::Syntasso(){
     numPar[30].second = 914;
 
 
+    for(size_t i = 0; i < CAPACITY; i++){
+
+        commandOrder[i] = -1;
+    }
+
+
 }
 
 bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
@@ -154,6 +161,7 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
             return true;
         }
+        // checks to see if the first and onward parameters are either words or numbers
         else if((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z')){
 
             return true;
@@ -228,8 +236,8 @@ string Syntasso::asciiToBin(int& decimal)
   return reverse;
 } // end asciiToBin
 
-void Syntasso::readMnemonic(std::ifstream& inFile)
-{
+    void Syntasso::readMnemonic(std::ifstream& inFile)
+    {
   int whiteSpace = 0;
   string line;
   if(inFile.is_open())
@@ -248,9 +256,12 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
         while(getline(linestream,value, ' ' ))
 
         {
-          cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-            << "whiteSpace: " << whiteSpace << endl;
-          whiteSpace++;
+         // cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+            //<< "whiteSpace: " << whiteSpace << endl;
+          //whiteSpace++;
+
+
+
         }
 
       }
