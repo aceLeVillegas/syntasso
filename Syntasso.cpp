@@ -311,38 +311,37 @@ string Syntasso::asciiToBin(int& decimal)
 } // end readMnemonic
 
 
-// void Syntasso::readBin(std::ifstream& fin)
-// {
-//   string line;
-//   if(inFile.is_open())
-//   {
-//     cout << "Successfully opened file!" << endl;
-//     while(getline(inFile, line, '\n'))
-//     {
-//       std::stringstream   linestream(line);
-//       std::string         value;
-//
-//       while(getline(linestream,value, ' ' ))
-//
-//       {
-//         // cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-//         //   << "whiteSpace: " << whiteSpace << endl;
-//         //TODO: convert to binary code and write out to new .vilo file
-//
-//
-//       }
-//
-//     }
-//
-//     // close the file before exiting
-//     inFile.close();
-//   }
-//   else
-//   {
-//     cout << "Unable to open file.\n";
-//     exit(1);
-//   }
-// } // end readBin
+void Syntasso::readBin(std::ifstream& inFile)
+{
+  string line;
+  if(inFile.is_open())
+  {
+    cout << "Successfully opened  binary file!" << endl;
+    while(getline(inFile, line, '\n'))
+    {
+      std::stringstream   linestream(line);
+      std::string         value;
+      int binToDecimal;
+      while(getline(linestream,value, ' ' ))
+      {
+        binToDecimal = binaryConversion(value);
+        
+
+
+
+      }
+
+    }
+
+    // close the file before exiting
+    inFile.close();
+  }
+  else
+  {
+    cout << "Unable to open file.\n";
+    exit(1);
+  }
+} // end readBin
 
 
 void Syntasso::fillCommandOrder(string command){
@@ -477,3 +476,23 @@ void Syntasso::performCommand(int decimal, string line){
             break;
     }// end of switch
 }// end of performCommand()
+
+int Syntasso::binaryConversion(std::string binary)
+{
+  int length = binary.length();
+  int decimal[length];
+  int finalDecimal = 0;
+  int power = length - 1; //initialize this value at the highest exponent
+
+  for(int i = 0; i < length; i++)
+  {
+    if(binary[i] == '1')
+    {
+      finalDecimal += pow(2, power);
+      power--;
+    }
+    else
+      power--;
+  }
+  return finalDecimal;
+} // end binary
