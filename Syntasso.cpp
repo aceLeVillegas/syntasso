@@ -144,6 +144,9 @@ Syntasso::Syntasso(){
 
         commandOrder[i] = -1;
     }
+    usedC = 0;
+
+
 
 
 }
@@ -275,3 +278,137 @@ string Syntasso::asciiToBin(int& decimal)
     exit(1);
   }
 } // end readMnemonic
+
+
+void Syntasso::fillCommandOrder(string command){
+
+    for(size_t i = 0; i < CAPACITY; i++){
+
+        if(command == binCode[i].first){
+
+            commandOrder[usedC] = i;
+            usedC++;
+        }
+    }
+    return;
+
+}
+
+void Syntasso::performCommand(int decimal, string line){
+
+    switch (decimal) {
+
+        case 0:
+        // !Stasi (hault)
+        //Noe
+
+            break;
+
+        case 32:
+        // &Sum
+        //Sarah
+
+            break;
+
+        case 31:
+        //+Add
+        //Noe
+
+            break;
+
+        case 30:
+        // -Sub
+        //Noe
+
+            break;
+
+        case 29:
+        //*Mult
+        //Sarah
+
+            break;
+
+        case 28:
+        // /Div
+        //Sarah
+
+            break;
+
+        case 27:
+        //%Mod
+        // Noe
+
+            break;
+
+        case 26:
+        // ^Pow
+        //Noe
+
+            break;
+
+        case 25:
+        //~Fortono (Load)
+        // Sarah
+
+            break;
+
+        case 24:
+        // #Kyklo (Store)
+        // Sarah
+
+            break;
+
+        case 23:
+        //@Kyklo (Loop)
+        // Sarah
+
+            break;
+
+        case 22:
+        //>Ako (Input)
+        //Noe
+
+            break;
+
+        case 21:
+        // <Lego (Output)
+        //Noe
+
+            break;
+
+        case 20:
+        // ?Lykis (SkipCond)
+        //Sarah
+
+            break;
+
+        case 19:
+        // $Alma (Jump)
+        //Noe
+
+            break;
+
+        case 18:
+        // |Exa (Clear)
+        // Sarah
+
+
+            break;
+
+        case 17:
+        // Deka
+
+            break;
+
+        case 16:
+        //Epis
+
+            break;
+
+        default:
+
+            cout << "Invalid COmmand! What Happened?!" <<endl;
+
+            break;
+    }// end of switch
+}// end of performCommand()

@@ -33,7 +33,10 @@ class Syntasso{
         // Summary: Function will take in the binary representation of the command and store the commands in commandOrder[]
 
         void performCommand(int decimal, string line);
-        // Summary: Takes in the binary representation of the command and the lne read in from the binary file then performs the specific operation. 
+        // Summary: Takes in the binary representation of the command and the lne read in from the binary file then performs the specific operation.
+
+        void clearRegisters();
+        // Summary 
 
 
 
@@ -45,10 +48,11 @@ class Syntasso{
       int operand; // memory location of opCode being acted on
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
-      int parameters;
-      std::pair<std::string, std::string> binCode[CAPACITY];
-      std::pair<std::string, int> numPar[CAPACITY];
+      int parameters; // Holds how many parameter(s) command can have
+      std::pair<std::string, std::string> binCode[CAPACITY]; // Holds what the binary representation is
+      std::pair<std::string, int> numPar[CAPACITY];// holds the number of parameter are allowed
       int commandOrder[CAPACITY];
+      size_t usedC; // Counter for commandOrder[]
 
 
 
