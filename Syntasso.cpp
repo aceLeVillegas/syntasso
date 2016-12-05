@@ -8,6 +8,7 @@ using namespace std;
 
 Syntasso::Syntasso(){
 
+    // Binary representation for each command
     binCode[0].first = "&Sum";
     binCode[0].second = "100000";
     binCode[1].first = "+Add";
@@ -72,7 +73,7 @@ Syntasso::Syntasso(){
     binCode[30].second = "1111";
 
 
-
+    // How many parameters are allowed for each command
     numPar[0].first = "&Sum";
     numPar[0].second = 1;
     numPar[1].first = "+Add";
@@ -139,6 +140,15 @@ Syntasso::Syntasso(){
     numPar[30].second = 914;
 
 
+    for(size_t i = 0; i < CAPACITY; i++){
+
+        commandOrder[i] = -1;
+    }
+    usedC = 0;
+
+
+
+
 }
   std::string Syntasso::stringToBin(std::string word)
   {
@@ -168,6 +178,7 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
             return true;
         }
+        // checks to see if the first and onward parameters are either words or numbers
         else if((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z')){
 
             return true;
@@ -242,8 +253,8 @@ string Syntasso::asciiToBin(int& decimal)
   return reverse;
 } // end asciiToBin
 
-void Syntasso::readMnemonic(std::ifstream& inFile)
-{
+    void Syntasso::readMnemonic(std::ifstream& inFile)
+    {
   int whiteSpace = 0;
   string line;
   ofstream fout;
@@ -283,6 +294,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
             exit(1);
           }
 
+
         }
         fout << endl;
 
@@ -297,6 +309,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
     exit(1);
   }
 } // end readMnemonic
+
 
 // void Syntasso::readBin(std::ifstream& fin)
 // {
@@ -330,3 +343,137 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
 //     exit(1);
 //   }
 // } // end readBin
+
+
+void Syntasso::fillCommandOrder(string command){
+
+    for(size_t i = 0; i < CAPACITY; i++){
+
+        if(command == binCode[i].first){
+
+            commandOrder[usedC] = i;
+            usedC++;
+        }
+    }
+    return;
+
+}
+
+void Syntasso::performCommand(int decimal, string line){
+
+    switch (decimal) {
+
+        case 0:
+        // !Stasi (hault)
+        //Noe
+
+            break;
+
+        case 32:
+        // &Sum
+        //Sarah
+
+            break;
+
+        case 31:
+        //+Add
+        //Noe
+
+            break;
+
+        case 30:
+        // -Sub
+        //Noe
+
+            break;
+
+        case 29:
+        //*Mult
+        //Sarah
+
+            break;
+
+        case 28:
+        // /Div
+        //Sarah
+
+            break;
+
+        case 27:
+        //%Mod
+        // Noe
+
+            break;
+
+        case 26:
+        // ^Pow
+        //Noe
+
+            break;
+
+        case 25:
+        //~Fortono (Load)
+        // Sarah
+
+            break;
+
+        case 24:
+        // #Kyklo (Store)
+        // Sarah
+
+            break;
+
+        case 23:
+        //@Kyklo (Loop)
+        // Sarah
+
+            break;
+
+        case 22:
+        //>Ako (Input)
+        //Noe
+
+            break;
+
+        case 21:
+        // <Lego (Output)
+        //Noe
+
+            break;
+
+        case 20:
+        // ?Lykis (SkipCond)
+        //Sarah
+
+            break;
+
+        case 19:
+        // $Alma (Jump)
+        //Noe
+
+            break;
+
+        case 18:
+        // |Exa (Clear)
+        // Sarah
+
+
+            break;
+
+        case 17:
+        // Deka
+
+            break;
+
+        case 16:
+        //Epis
+
+            break;
+
+        default:
+
+            cout << "Invalid COmmand! What Happened?!" <<endl;
+
+            break;
+    }// end of switch
+}// end of performCommand()

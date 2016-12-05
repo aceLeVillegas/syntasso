@@ -2,8 +2,8 @@
 
 (Variables: )
 (ALL Variables names must be in lower case )
-(Integer values will be identified by "Deka" then the value)
-(Chars values will be identified by "Epis" then a letter)
+(Integer values will be identified by "Deka" then the value)17(010001)
+(Chars values will be identified by "Epis" then a letter) 16(010010)
 (String values will be identified by "Minyma" then a string)
 
 (Syntax error will be identified by "Koino")
@@ -93,5 +93,5 @@ $Alma(Word for where you want to read commands in the list)
 |Exa
 
 (Will stop the program)
-(000000)
+0(000000)
 !Stasi
