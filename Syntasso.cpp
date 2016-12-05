@@ -140,6 +140,20 @@ Syntasso::Syntasso(){
 
 
 }
+  std::string Syntasso::stringToBin(std::string word)
+  {
+    std::string transToBin;
+    for(unsigned int i = 0; i < CAPACITY; i++)
+    {
+      if(word == binCode[i].first)
+      {
+        transToBin = binCode[i].second;
+        //cout << transToBin << endl;
+      }
+    }
+
+    return transToBin;
+  } // end stringToBin
 
 bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
@@ -232,6 +246,8 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
 {
   int whiteSpace = 0;
   string line;
+  ofstream fout;
+  fout.open("binCode.vilo",ios::out);
   if(inFile.is_open())
   {
     cout << "Successfully opened file!" << endl;
@@ -242,16 +258,33 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
       std::string         value;
       // Ignore if the line is a comment or dummy variables
       if(line.find("(") == 0)
+      {
+        whiteSpace = 0;
         continue;
+      }
       else
       {
         while(getline(linestream,value, ' ' ))
 
         {
-          cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-            << "whiteSpace: " << whiteSpace << endl;
-          whiteSpace++;
+          // cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+          //   << "whiteSpace: " << whiteSpace << endl;
+          if(checkSyntax(value, whiteSpace))
+          {
+            value = stringToBin(value);
+            fout << value << " ";
+            whiteSpace++;
+          }
+          else
+          {
+            cout << "Koino : "  << line << endl;
+            cout << "Program terminated abnormally." << endl;
+            cout << value << endl;
+            exit(1);
+          }
+
         }
+        fout << endl;
 
       }
     } // end while
@@ -264,3 +297,36 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
     exit(1);
   }
 } // end readMnemonic
+
+// void Syntasso::readBin(std::ifstream& fin)
+// {
+//   string line;
+//   if(inFile.is_open())
+//   {
+//     cout << "Successfully opened file!" << endl;
+//     while(getline(inFile, line, '\n'))
+//     {
+//       std::stringstream   linestream(line);
+//       std::string         value;
+//
+//       while(getline(linestream,value, ' ' ))
+//
+//       {
+//         // cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+//         //   << "whiteSpace: " << whiteSpace << endl;
+//         //TODO: convert to binary code and write out to new .vilo file
+//
+//
+//       }
+//
+//     }
+//
+//     // close the file before exiting
+//     inFile.close();
+//   }
+//   else
+//   {
+//     cout << "Unable to open file.\n";
+//     exit(1);
+//   }
+// } // end readBin

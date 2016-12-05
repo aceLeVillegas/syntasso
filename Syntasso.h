@@ -22,6 +22,10 @@ class Syntasso{
         std::string asciiToBin(int& decimal); // completed
         // Summary: Function will take an integer and return a string equvalent to its binary value.
 
+        std::string stringToBin(std::string word); // completed
+        // Summary: Functions takes a command or register name and returns its predetermined value in binary code
+        // found in the binCode table.
+
         void readBin(std::ifstream& fin);
         // Summary: Function will read a text file with binary values to be passed into the assembly simulator.
 
