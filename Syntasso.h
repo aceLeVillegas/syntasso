@@ -12,9 +12,13 @@ class Syntasso{
 
         static const std::size_t CAPACITY = 30;
         Syntasso();
+        // Summary: Sets up binCode[], numPar[], commandOrder[], and registers.  
         bool checkSyntax(std::string word, int &whiteSpace);
+        // Summary: Takes in the word read in by a file and shecks if it is a Command , register, number and word.
         bool searchPar(std::string key);
+        // Summary: Goes through numPar[] and checks if the key is present and sets parameters to the value at the key
         bool searchBin(std::string key);
+        // Summary: Goes through binCode[] and checks if the key is present
 
         int stringtoAscii(std::string& word); //completed
         // Summary: Function will take a string that will be converted to its ascii value.
@@ -33,14 +37,14 @@ class Syntasso{
         // Summary: Function will read a text file with mnemonic code to be converted into binary
         // code and write out into a new text file.
 
-        void fillCommandOrder(string command);
+        void fillCommandOrder(std::string command);
         // Summary: Function will take in the binary representation of the command and store the commands in commandOrder[]
 
-        void performCommand(int decimal, string line);
+        void performCommand(int decimal, std::string line);
         // Summary: Takes in the binary representation of the command and the lne read in from the binary file then performs the specific operation.
 
         void clearRegisters();
-        // Summary 
+        // Summary: Sets all registers to null or 0
 
 
 

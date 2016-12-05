@@ -146,6 +146,21 @@ Syntasso::Syntasso(){
     }
     usedC = 0;
 
+    alpha = NULL;
+    beta = NULL;
+    gamma = "";
+    delta = "";
+    epsilon = "";
+    zeta = '';
+    eta = '';
+    theta = '';
+    iota = 0;
+    kappa = 0;
+    lambda = 0;
+    mu = 0;
+    sigma = 0;
+    omicron = 0;
+    omega = 0;
 
 
 
@@ -172,14 +187,15 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
         return searchPar(word);
     }
     // to search and see if the parameters are registers, numbers, or words
-    if(whiteSpace == 1 && parameters >= whiteSpace){
+    else if(whiteSpace >= 1 && parameters >= whiteSpace){
 
         if(searchBin(word)){
 
             return true;
-        }
+        }/*
+        // work on if we have time
         // checks to see if the first and onward parameters are either words or numbers
-        else if((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z')){
+        else if((word[0] >= "0" && word[0] <= "9") || (word[0] >= "a" && word[0] <= "z")){
 
             return true;
         }
@@ -187,12 +203,14 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
             return false;
         }// end else
+        */
     }// end if
+
     else{
 
         return false;
     }
-
+    //return false;
 
 }
 bool Syntasso::searchPar(std::string key){
@@ -455,9 +473,8 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 18:
         // |Exa (Clear)
-        // Sarah
 
-
+            clearRegisters();
             break;
 
         case 17:
@@ -477,3 +494,22 @@ void Syntasso::performCommand(int decimal, string line){
             break;
     }// end of switch
 }// end of performCommand()
+
+void Syntasso::clearRegisters(){
+
+    alpha = NULL;
+    beta = NULL;
+    gamma = "";
+    delta = "";
+    epsilon = "";
+    zeta = '';
+    eta = '';
+    theta = '';
+    iota = 0;
+    kappa = 0;
+    lambda = 0;
+    mu = 0;
+    sigma = 0;
+    omicron = 0;
+    omega = 0;
+}
