@@ -8,13 +8,16 @@
 
 (Syntax error will be identified by "Koino")
 
-(***Provide a list of given registers and their names)
+(***List of given registers and their names)
+
 alpha (pointer type only)(0001)
 beta  (pointer type only)(0010)
-(Registers below can hold a string or letter value)
+(Registers below can hold a string)
 gamma (0011)
 delta (0100)
 epsilon (0101)
+
+(Registers below can hold a letter value)
 zeta (0110)
 eta (0111)
 theta (1000)
