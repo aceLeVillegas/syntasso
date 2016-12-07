@@ -162,6 +162,12 @@ Syntasso::Syntasso(){
     omicron = 0;
     omega = 0;
 
+    // initialize the array elements to 0 to get rid of trash values.
+    for(int i = 0; i < 1000; i++)
+    {
+      memory[i] = 0;
+    }
+
 
 
 }
@@ -329,38 +335,35 @@ string Syntasso::asciiToBin(int& decimal)
 } // end readMnemonic
 
 
-// void Syntasso::readBin(std::ifstream& fin)
-// {
-//   string line;
-//   if(inFile.is_open())
-//   {
-//     cout << "Successfully opened file!" << endl;
-//     while(getline(inFile, line, '\n'))
-//     {
-//       std::stringstream   linestream(line);
-//       std::string         value;
-//
-//       while(getline(linestream,value, ' ' ))
-//
-//       {
-//         // cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-//         //   << "whiteSpace: " << whiteSpace << endl;
-//         //TODO: convert to binary code and write out to new .vilo file
-//
-//
-//       }
-//
-//     }
-//
-//     // close the file before exiting
-//     inFile.close();
-//   }
-//   else
-//   {
-//     cout << "Unable to open file.\n";
-//     exit(1);
-//   }
-// } // end readBin
+void Syntasso::readBin(std::ifstream& inFile)
+{
+  string line;
+  if(inFile.is_open())
+  {
+    cout << "Successfully opened  binary file!" << endl;
+    while(getline(inFile, line, '\n'))
+    {
+      std::stringstream   linestream(line);
+      std::string         value;
+      int binToDecimal;
+      // take the first binary code and convert to a decimal number
+      binToDecimal = binaryConversion(line.substr(0,6));
+      // take the rest of the binary code and remove the code we already converted
+      line = line.substr(7);
+      performCommand(binToDecimal, line);
+
+
+    }
+
+    // close the file before exiting
+    inFile.close();
+  }
+  else
+  {
+    cout << "Unable to open file.\n";
+    exit(1);
+  }
+} // end readBin
 
 
 void Syntasso::fillCommandOrder(string command){
@@ -532,6 +535,27 @@ void Syntasso::performCommand(int decimal, string line){
     }// end of switch
 }// end of performCommand()
 
+
+int Syntasso::binaryConversion(std::string binary)
+{
+  int length = binary.length();
+  int decimal[length];
+  int finalDecimal = 0;
+  int power = length - 1; //initialize this value at the highest exponent
+
+  for(int i = 0; i < length; i++)
+  {
+    if(binary[i] == '1')
+    {
+      finalDecimal += pow(2, power);
+      power--;
+    }
+    else
+      power--;
+  }
+  return finalDecimal;
+} // end binary
+
 void Syntasso::clearRegisters(){
 
     alpha = NULL;
@@ -550,3 +574,17 @@ void Syntasso::clearRegisters(){
     omicron = 0;
     omega = 0;
 }
+
+int Syntasso::findReg(std::string line)
+{
+  string binValue = line.substr(0, 4);
+  for(int i = 0; i < CAPACITY; ++i)
+  {
+    if(binCode[i].second == binValue)
+    {
+      line = line.substr(5);
+      return i;
+    }
+  }
+
+} // end findReg
