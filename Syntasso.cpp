@@ -4,6 +4,7 @@
 #include <fstream>
 #include <iostream>
 #include <cstdlib>
+#include <cmath>
 using namespace std;
 
 Syntasso::Syntasso(){
@@ -188,10 +189,10 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
         if(searchBin(word)){
 
             return true;
-        }/*
+        }
         // work on if we have time
         // checks to see if the first and onward parameters are either words or numbers
-        else if((word[0] >= "0" && word[0] <= "9") || (word[0] >= "a" && word[0] <= "z")){
+        else if( whiteSpace == 1 && ((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z'))){
 
             return true;
         }
@@ -199,8 +200,17 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
             return false;
         }// end else
-        */
+
+
     }// end if
+    else if( whiteSpace == 2 &&
+    ((searchBin(word) || ((word.length() == 1) &&
+    (word == "N" || word == "P" || word == "Z") )
+))){
+
+        return true;
+    }
+
 
 
     return false;
@@ -289,8 +299,8 @@ string Syntasso::asciiToBin(int& decimal)
         while(getline(linestream,value, ' ' ))
 
         {
-          // cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-          //   << "whiteSpace: " << whiteSpace << endl;
+        //    cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+        //     << "whiteSpace: " << whiteSpace << endl;
           if(checkSyntax(value, whiteSpace))
           {
             value = stringToBin(value);
@@ -371,7 +381,8 @@ void Syntasso::performCommand(int decimal, string line){
 
     int location1 = 0,
         location2 = 0,
-        location3 = 0;
+        location3 = 0,
+        value;
     switch (decimal) {
 
         case 0:
@@ -382,14 +393,16 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 32:
         // &Sum
-        //Sarah
+            location1 = findReg(line);
 
+             cout << "Enter a value: ";
+             cin >> value;
+
+             memory[numPar[location1].second] += value;
             break;
 
         case 31:
         //+Add
-        //Noe
-
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -399,8 +412,6 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 30:
         // -Sub
-        //Noe
-
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -411,8 +422,6 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 29:
         //*Mult
-        //Sarah
-
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -422,25 +431,21 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 28:
         // /Div
-        //Sarah
-
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
 
             memory[numPar[location3].second] = memory[numPar[location1].second] / memory[numPar[location2].second];
-
             break;
 
         case 27:
         //%Mod
-        // Noe
 
-        location1 = findReg(line);
-        location2 = findReg(line);
-        location3 = findReg(line);
+            location1 = findReg(line);
+            location2 = findReg(line);
+            location3 = findReg(line);
 
-        memory[numPar[location3].second] = memory[numPar[location1].second] % memory[numPar[location2].second];
+            memory[numPar[location3].second] = memory[numPar[location1].second] % memory[numPar[location2].second];
 
             break;
 
@@ -484,9 +489,10 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 20:
         // ?Lykis (SkipCond)
-        //Sarah
-
             location1 = findReg(line);
+
+
+
 
             break;
 
@@ -502,7 +508,8 @@ void Syntasso::performCommand(int decimal, string line){
             clearRegisters();
             break;
 
-        case 17:
+        case
+         17:
         // Deka
 
             break;
@@ -562,5 +569,34 @@ int Syntasso::findReg(std::string line)
       return i;
     }
   }
+  return -1;
 
 } // end findReg
+
+void Syntasso::skip(int value, char state){
+    canSkip = false;
+    switch (state) {
+
+        case 'N':
+            if(value < 0){
+                canSkip = true;
+            }
+            break;
+
+        case 'P':
+            if(value > 0){
+                canSkip = true;
+            }
+            break;
+
+        case 'Z':
+            if(value == 0){
+                canSkip = true;
+            }
+            break;
+
+
+
+    }
+
+}// end of skip()

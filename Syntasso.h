@@ -52,6 +52,8 @@ class Syntasso{
         int findReg(std::string line); // completed
         // Takes a line with binary code representing a register and converts it to an int that indicates the value of index in memory array.
 
+        void skip(int value, char state);
+
 
 
 
@@ -65,6 +67,7 @@ class Syntasso{
       std::pair<std::string, int> numPar[CAPACITY];// holds the number of parameter are allowed
       int commandOrder[CAPACITY]; // will use if loop is implemented.
       size_t usedC; // Counter for commandOrder[]
+      bool canSkip;
 
 
 
