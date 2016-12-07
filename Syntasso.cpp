@@ -404,8 +404,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] + memory[numPar[binCode[location2].second].second];
-
+            memory[numPar[location3].second] = memory[numPar[location1].second] + memory[numPar[location2].second];
             break;
 
         case 30:
@@ -416,7 +415,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] - memory[numPar[binCode[location2].second].second];
+            memory[numPar[location3].second] = memory[numPar[location1].second] - memory[numPar[location2].second];
 
             break;
 
@@ -428,8 +427,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] * memory[numPar[binCode[location2].second].second];
-
+            memory[numPar[location3].second] = memory[numPar[location1].second] * memory[numPar[location2].second];
             break;
 
         case 28:
@@ -440,7 +438,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] / memory[numPar[binCode[location2].second].second];
+            memory[numPar[location3].second] = memory[numPar[location1].second] / memory[numPar[location2].second];
 
             break;
 
@@ -452,7 +450,7 @@ void Syntasso::performCommand(int decimal, string line){
         location2 = findReg(line);
         location3 = findReg(line);
 
-        memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] % memory[numPar[binCode[location2].second].second];
+        memory[numPar[location3].second] = memory[numPar[location1].second] % memory[numPar[location2].second];
 
             break;
 
