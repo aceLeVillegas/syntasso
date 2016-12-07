@@ -162,6 +162,12 @@ Syntasso::Syntasso(){
     omicron = 0;
     omega = 0;
 
+    // initialize the array elements to 0 to get rid of trash values.
+    for(int i = 0; i < 1000; i++)
+    {
+      memory[i] = 0;
+    }
+
 
 
 }
@@ -340,14 +346,12 @@ void Syntasso::readBin(std::ifstream& inFile)
       std::stringstream   linestream(line);
       std::string         value;
       int binToDecimal;
-      while(getline(linestream,value, ' ' ))
-      {
-        binToDecimal = binaryConversion(value);
+      // take the first binary code and convert to a decimal number
+      binToDecimal = binaryConversion(line.substr(0,6));
+      // take the rest of the binary code and remove the code we already converted
+      line = line.substr(7);
+      performCommand(binToDecimal, line);
 
-
-
-
-      }
 
     }
 
@@ -533,3 +537,17 @@ void Syntasso::clearRegisters(){
     omicron = 0;
     omega = 0;
 }
+
+int Syntasso::findReg(std::string line)
+{
+  string binValue = line.substr(0, 4);
+  for(int i = 0; i < CAPACITY; ++i)
+  {
+    if(binCode[i].second == binValue)
+    {
+      line = line.substr(5);
+      return i;
+    }
+  }
+
+} // end findReg

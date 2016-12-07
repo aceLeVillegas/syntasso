@@ -49,21 +49,20 @@ class Syntasso{
         void clearRegisters();
         // Summary: Sets all registers to null or 0
 
+        int findReg(std::string line);
+        // Takes a line with binary code representing a register and converts it to an int that indicates the value of index in memory array.
+
 
 
 
     private:
-      int accumulator; // accumulator register
       int counter;
-      int numberOfInstructions;
-      int opCode; // current operation being performed
-      int operand; // memory location of opCode being acted on
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
       int parameters; // Holds how many parameter(s) command can have
       std::pair<std::string, std::string> binCode[CAPACITY]; // Holds what the binary representation is
       std::pair<std::string, int> numPar[CAPACITY];// holds the number of parameter are allowed
-      int commandOrder[CAPACITY];
+      int commandOrder[CAPACITY]; // will use if loop is implemented.
       size_t usedC; // Counter for commandOrder[]
 
 
