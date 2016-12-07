@@ -49,8 +49,11 @@ class Syntasso{
         void clearRegisters();
         // Summary: Sets all registers to null or 0
 
-        int findReg(std::string line); // completed
+        int findReg(std::string& line); // completed
         // Takes a line with binary code representing a register and converts it to an int that indicates the value of index in memory array.
+
+        void displayMemory(); //completed
+        // Function will display a visual representation of the Syntasso memory.
 
 
 
@@ -65,6 +68,7 @@ class Syntasso{
       std::pair<std::string, int> numPar[CAPACITY];// holds the number of parameter are allowed
       int commandOrder[CAPACITY]; // will use if loop is implemented.
       size_t usedC; // Counter for commandOrder[]
+      size_t commandCounter;
 
 
 

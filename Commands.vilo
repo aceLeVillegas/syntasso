@@ -75,7 +75,7 @@ omega (1111)
 @Kyklo (First word that will indicate the start, Second word will indicate the end, Third is for how many iterations of commands wanted)
 (can have only 2 values if only repeating one line )
 
-(Take in a value from )
+(Take in a value from user)
 22(010110)
 >Ako (First value is where the register will be stored in)
 
