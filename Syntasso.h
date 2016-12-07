@@ -49,7 +49,7 @@ class Syntasso{
         void clearRegisters();
         // Summary: Sets all registers to null or 0
 
-        int findReg(std::string line);
+        int findReg(std::string line); // completed
         // Takes a line with binary code representing a register and converts it to an int that indicates the value of index in memory array.
 
 
