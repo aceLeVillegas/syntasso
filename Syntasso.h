@@ -12,7 +12,7 @@ class Syntasso{
 
         static const std::size_t CAPACITY = 30;
         Syntasso();
-        // Summary: Sets up binCode[], numPar[], commandOrder[], and registers.  
+        // Summary: Sets up binCode[], numPar[], commandOrder[], and registers.
         bool checkSyntax(std::string word, int &whiteSpace);
         // Summary: Takes in the word read in by a file and shecks if it is a Command , register, number and word.
         bool searchPar(std::string key);
@@ -48,12 +48,10 @@ class Syntasso{
 
 
 
+
     private:
       int accumulator; // accumulator register
       int counter;
-      int numberOfInstructions;
-      int opCode; // current operation being performed
-      int operand; // memory location of opCode being acted on
       int instructionRegister; // next instruction to be split and run
       int memory[1000];
       int parameters; // Holds how many parameter(s) command can have

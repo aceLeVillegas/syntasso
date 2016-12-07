@@ -379,6 +379,9 @@ void Syntasso::fillCommandOrder(string command){
 
 void Syntasso::performCommand(int decimal, string line){
 
+    int location1 = 0,
+        location2 = 0,
+        location3 = 0;
     switch (decimal) {
 
         case 0:
@@ -397,11 +400,23 @@ void Syntasso::performCommand(int decimal, string line){
         //+Add
         //Noe
 
+            location1 = findReg(line);
+            location2 = findReg(line);
+            location3 = findReg(line);
+
+            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] + memory[numPar[binCode[location2].second].second];
+
             break;
 
         case 30:
         // -Sub
         //Noe
+
+            location1 = findReg(line);
+            location2 = findReg(line);
+            location3 = findReg(line);
+
+            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] - memory[numPar[binCode[location2].second].second];
 
             break;
 
@@ -409,11 +424,23 @@ void Syntasso::performCommand(int decimal, string line){
         //*Mult
         //Sarah
 
+            location1 = findReg(line);
+            location2 = findReg(line);
+            location3 = findReg(line);
+
+            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] * memory[numPar[binCode[location2].second].second];
+
             break;
 
         case 28:
         // /Div
         //Sarah
+
+            location1 = findReg(line);
+            location2 = findReg(line);
+            location3 = findReg(line);
+
+            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] / memory[numPar[binCode[location2].second].second];
 
             break;
 
@@ -421,26 +448,34 @@ void Syntasso::performCommand(int decimal, string line){
         //%Mod
         // Noe
 
+        location1 = findReg(line);
+        location2 = findReg(line);
+        location3 = findReg(line);
+
+        memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] % memory[numPar[binCode[location2].second].second];
+
             break;
 
         case 26:
         // ^Pow
         //Noe
 
-            break;
 
+            break;
+/*
         case 25:
         //~Fortono (Load)
         // Sarah
-
+        // Remove Command not needed
             break;
 
         case 24:
         // #Kyklo (Store)
         // Sarah
+        // Remove Command not needed
 
             break;
-
+*/
         case 23:
         //@Kyklo (Loop)
         // Sarah
@@ -462,6 +497,8 @@ void Syntasso::performCommand(int decimal, string line){
         case 20:
         // ?Lykis (SkipCond)
         //Sarah
+
+            location1 = findReg(line);
 
             break;
 
