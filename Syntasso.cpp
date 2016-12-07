@@ -202,11 +202,8 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
         */
     }// end if
 
-    else{
 
-        return false;
-    }
-    //return false;
+    return false;
 
 }
 bool Syntasso::searchPar(std::string key){
