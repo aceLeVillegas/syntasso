@@ -146,21 +146,21 @@ Syntasso::Syntasso(){
     }
     usedC = 0;
 
-    alpha = NULL;
-    beta = NULL;
-    gamma = "";
-    delta = "";
-    epsilon = "";
-    zeta = '';
-    eta = '';
-    theta = '';
-    iota = 0;
-    kappa = 0;
-    lambda = 0;
-    mu = 0;
-    sigma = 0;
-    omicron = 0;
-    omega = 0;
+    // alpha = NULL;
+    // beta = NULL;
+    // gamma = "";
+    // delta = "";
+    // epsilon = "";
+    // zeta = '';
+    // eta = '';
+    // theta = '';
+    // iota = 0;
+    // kappa = 0;
+    // lambda = 0;
+    // mu = 0;
+    // sigma = 0;
+    // omicron = 0;
+    // omega = 0;
 
     // initialize the array elements to 0 to get rid of trash values.
     for(int i = 0; i < 1000; i++)
@@ -407,8 +407,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] + memory[numPar[binCode[location2].second].second];
-
+            memory[numPar[location3].second] = memory[numPar[location1].second] + memory[numPar[location2].second];
             break;
 
         case 30:
@@ -419,7 +418,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] - memory[numPar[binCode[location2].second].second];
+            memory[numPar[location3].second] = memory[numPar[location1].second] - memory[numPar[location2].second];
 
             break;
 
@@ -431,8 +430,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] * memory[numPar[binCode[location2].second].second];
-
+            memory[numPar[location3].second] = memory[numPar[location1].second] * memory[numPar[location2].second];
             break;
 
         case 28:
@@ -443,7 +441,7 @@ void Syntasso::performCommand(int decimal, string line){
             location2 = findReg(line);
             location3 = findReg(line);
 
-            memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] / memory[numPar[binCode[location2].second].second];
+            memory[numPar[location3].second] = memory[numPar[location1].second] / memory[numPar[location2].second];
 
             break;
 
@@ -455,7 +453,7 @@ void Syntasso::performCommand(int decimal, string line){
         location2 = findReg(line);
         location3 = findReg(line);
 
-        memory[numPar[binCode[location3].second].second] = memory[numPar[binCode[location1].second].second] % memory[numPar[binCode[location2].second].second];
+        memory[numPar[location3].second] = memory[numPar[location1].second] % memory[numPar[location2].second];
 
             break;
 
@@ -514,7 +512,7 @@ void Syntasso::performCommand(int decimal, string line){
         case 18:
         // |Exa (Clear)
 
-            clearRegisters();
+            //clearRegisters();
             break;
 
         case 17:
@@ -556,24 +554,24 @@ int Syntasso::binaryConversion(std::string binary)
   return finalDecimal;
 } // end binary
 
-void Syntasso::clearRegisters(){
-
-    alpha = NULL;
-    beta = NULL;
-    gamma = "";
-    delta = "";
-    epsilon = "";
-    zeta = '';
-    eta = '';
-    theta = '';
-    iota = 0;
-    kappa = 0;
-    lambda = 0;
-    mu = 0;
-    sigma = 0;
-    omicron = 0;
-    omega = 0;
-}
+// void Syntasso::clearRegisters(){
+//
+//     alpha = NULL;
+//     beta = NULL;
+//     gamma = "";
+//     delta = "";
+//     epsilon = "";
+//     zeta = '';
+//     eta = '';
+//     theta = '';
+//     iota = 0;
+//     kappa = 0;
+//     lambda = 0;
+//     mu = 0;
+//     sigma = 0;
+//     omicron = 0;
+//     omega = 0;
+// }
 
 int Syntasso::findReg(std::string line)
 {
