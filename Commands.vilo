@@ -85,7 +85,7 @@ omega (1111)
 
 (Will check if the accumulator has either a negative, positive, or zero value )
 20(010100)
-?Lykis(Choices for values: Neg , Pos , Zero)
+?Lykis(First the value your checking against, Second choices for values: Neg 'N' , Pos 'P' , Zero 'Z')
 
 (moves to the desired location to read future commands)
 19(010011)

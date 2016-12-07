@@ -55,6 +55,9 @@ class Syntasso{
         void displayMemory(); //completed
         // Function will display a visual representation of the Syntasso memory.
 
+        void skip(int value, char state);
+
+
 
 
 
@@ -69,6 +72,7 @@ class Syntasso{
       int commandOrder[CAPACITY]; // will use if loop is implemented.
       size_t usedC; // Counter for commandOrder[]
       size_t commandCounter;
+      bool canSkip;
 
 
 
