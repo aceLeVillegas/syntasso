@@ -109,11 +109,11 @@ Syntasso::Syntasso(){
     numPar[15].first = "!Stasi";
     numPar[15].second = 0;
     // The following registers are going to be assigned an index in memory array
-    // starting at index 900 to 914
+    // starting at index 2 - 14  alpha and beta will be pointers pointing to index 50
     numPar[16].first = "alpha";
-    numPar[16].second = 0;
+    numPar[16].second = 50;
     numPar[17].first = "beta";
-    numPar[17].second = 1;
+    numPar[17].second = 50;
     numPar[18].first = "gamma";
     numPar[18].second = 2;
     numPar[19].first = "delta";
@@ -645,3 +645,14 @@ void Syntasso::skip(int value, char state){
     }
 
 }// end of skip()
+
+bool Syntasso::find(int headPtr, int tailPtr, int target)
+{
+  bool isFound = false;
+  for(int i = headPtr; i < tailPtr; ++i)
+  {
+    if(memory[i] == target)
+      isFound = true;
+  }
+  return isFound;
+}

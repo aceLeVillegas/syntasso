@@ -57,7 +57,9 @@ class Syntasso{
 
         void skip(int value, char state);
 
-
+        bool find(int headPtr, int tailPtr, int target);
+        // Function will iterate beginning at the head of array and compare values at every index until
+        // it reaches the end of the the array at tailPtr.  Will return true if value is found or false if not found.
 
 
 
