@@ -216,7 +216,7 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
     // Condition for ?Lykis
     else if(commandOrder[usedC].first == 20 &&
     (whiteSpace == 2) &&
-    (word[0] >= 'a' && word[0] <= 'z'))
+    (word[0] >= '0' && word[0] <= '9'))
 )) ){
 
         return true;
