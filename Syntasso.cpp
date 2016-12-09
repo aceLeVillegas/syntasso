@@ -25,8 +25,8 @@ Syntasso::Syntasso(){
     binCode[5].second = "011011";
     binCode[6].first = "^Pow";
     binCode[6].second = "011010";
-    binCode[7].first = "~Fortono";
-    binCode[7].second = "011001";
+    binCode[7].first = "Edo";
+    binCode[7].second = "2";
     binCode[8].first = "#Kryvo";
     binCode[8].second = "011000";
     binCode[9].first = "@Kyklo";
@@ -90,8 +90,8 @@ Syntasso::Syntasso(){
     numPar[5].second = 3;
     numPar[6].first = "^Pow";
     numPar[6].second = 3;
-    numPar[7].first = "~Fortono";
-    numPar[7].second = 1;
+    numPar[7].first = "Edo";
+    numPar[7].second = -1;
     numPar[8].first = "#Kryvo";
     numPar[8].second = 1;
     numPar[9].first = "@Kyklo";
@@ -141,12 +141,14 @@ Syntasso::Syntasso(){
     numPar[30].first = "omega";
     numPar[30].second = 14;
 
+    parameters = -1;
+    usedC = 0;
 
     for(size_t i = 0; i < CAPACITY; i++){
 
-        commandOrder[i] = -1;
+        commandOrder[i].first = -10;
+        commandOrder[i].second = -10;
     }
-    usedC = 0;
 
     // initialize the array elements to 0 to get rid of trash values.
     memory[0] = 50; // set alpha to point to index 50
@@ -155,8 +157,6 @@ Syntasso::Syntasso(){
     {
       memory[i] = 0;
     }
-
-
 
 }
   std::string Syntasso::stringToBin(std::string word)
@@ -176,11 +176,19 @@ Syntasso::Syntasso(){
 
 bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
-    if(whiteSpace == 0){
+    // If the line were reading in is a line within the loop
+    if(word == "Edo" && whiteSpace == 0){
+
+        commandOrder[usedC].first = -1;
+        return true;
+    }
+    // Command is the first value for the line being read in
+    else if(whiteSpace == 0 && word != "Edo" ){
 
         return searchPar(word);
     }
-    // to search and see if the parameters are registers, numbers, or words
+
+    // to search and see if the parameters are registers, numbers, or words IF IT the line starts with a comand
     else if(whiteSpace >= 1 && parameters >= whiteSpace){
 
         if(searchBin(word)){
@@ -198,15 +206,26 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
         }// end else
 
     }// end if
-    else if( whiteSpace == 2 &&
-    ((searchBin(word) || ((word.length() == 1) &&
-    (word == "N" || word == "P" || word == "Z") )
-))){
+    else if(whiteSpace == 1 && searchPar(word)){
+
+
+        whiteSpace--;
+        return searchPar(word);
+    }// end else if
+
+    // Condition for ?Lykis
+    else if(commandOrder[usedC].first == 20 &&
+    (whiteSpace == 2) &&
+    (word[0] >= 'a' && word[0] <= 'z'))
+)) ){
 
         return true;
     }
-
-
+    // Condition for @Kyklo
+    else if( commandOrder[usedC].second == 23 &&
+    (whiteSpace == 2) &&
+    (word == "N" || word == "P" || word == "Z") )
+))){
 
     return false;
 
@@ -218,6 +237,7 @@ bool Syntasso::searchPar(std::string key){
         if(key == numPar[i].first){
 
             parameters = numPar[i].second;
+            commandOrder[usedC].second = binaryConversion(key);
 
             return true;
         }
@@ -269,7 +289,7 @@ string Syntasso::asciiToBin(int& decimal)
   return reverse;
 } // end asciiToBin
 
-    void Syntasso::readMnemonic(std::ifstream& inFile)
+void Syntasso::readMnemonic(std::ifstream& inFile)
     {
   int whiteSpace = 0;
   string line;
@@ -294,8 +314,8 @@ string Syntasso::asciiToBin(int& decimal)
         while(getline(linestream,value, ' ' ))
 
         {
-        //    cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-        //     << "whiteSpace: " << whiteSpace << endl;
+            cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+             << "whiteSpace: " << whiteSpace << endl;
           if(checkSyntax(value, whiteSpace))
           {
             value = stringToBin(value);
@@ -369,7 +389,7 @@ void Syntasso::fillCommandOrder(string command){
 
         if(command == binCode[i].first){
 
-            commandOrder[usedC] = i;
+            //commandOrder[usedC] = i;
             usedC++;
         }
     }
@@ -412,7 +432,6 @@ void Syntasso::performCommand(int decimal, string line){
 
             memory[numPar[location3].second] = memory[numPar[location1].second] + memory[numPar[location2].second];
             break;
-
         case 30:
         // -Sub
             line = line.substr(7);
