@@ -5,10 +5,11 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <iomanip>
 using namespace std;
 
 Syntasso::Syntasso(){
-
+    commandCounter = 15;
     // Binary representation for each command
     binCode[0].first = "&Sum";
     binCode[0].second = "100000";
@@ -145,11 +146,14 @@ Syntasso::Syntasso(){
 
     for(size_t i = 0; i < CAPACITY; i++){
 
-        commandOrder[i] = -10;
+        commandOrder[i].first = -10;
+        commandOrder[i].second = -10;
     }
 
     // initialize the array elements to 0 to get rid of trash values.
-    for(int i = 0; i < 1000; i++)
+    memory[0] = 50; // set alpha to point to index 50
+    memory[1] = 50; // set alpha to point to index 50
+    for(int i = 2; i < 1000; i++)
     {
       memory[i] = 0;
     }
@@ -176,7 +180,7 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
     if(word == "Edo" && whiteSpace == 0){
 
         commandOrder[usedC].first = -1;
-        return ture;
+        return true;
     }
     // Command is the first value for the line being read in
     else if(whiteSpace == 0 && word != "Edo" ){
@@ -191,7 +195,6 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
             return true;
         }
-
         // checks to see if the first and onward parameters are either words or numbers
         else if( whiteSpace == 1 && ((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z'))){
 
@@ -202,7 +205,6 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
             return false;
         }// end else
 
-
     }// end if
     else if(whiteSpace == 1 && searchPar(word)){
 
@@ -212,13 +214,18 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
     }// end else if
 
     // Condition for ?Lykis
-    else if( whiteSpace == 2 &&
-    ((searchBin(word) || ((word.length() == 1) &&
-    (word == "N" || word == "P" || word == "Z") )
-))){
+    else if(commandOrder[usedC].first == 20 &&
+    (whiteSpace == 2) &&
+    (word[0] >= 'a' && word[0] <= 'z'))
+)) ){
 
         return true;
     }
+    // Condition for @Kyklo
+    else if( commandOrder[usedC].second == 23 &&
+    (whiteSpace == 2) &&
+    (word == "N" || word == "P" || word == "Z") )
+))){
 
     return false;
 
@@ -307,8 +314,8 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
         while(getline(linestream,value, ' ' ))
 
         {
-        //    cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-        //     << "whiteSpace: " << whiteSpace << endl;
+            cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+             << "whiteSpace: " << whiteSpace << endl;
           if(checkSyntax(value, whiteSpace))
           {
             value = stringToBin(value);
@@ -342,20 +349,25 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
 
 void Syntasso::readBin(std::ifstream& inFile)
 {
+  int binToDecimal;
   string line;
+  string binary;
+  long int binaryInt;
+  int binCode;
   if(inFile.is_open())
   {
     cout << "Successfully opened  binary file!" << endl;
-    while(getline(inFile, line, '\n'))
+    while(getline(inFile, line))
     {
-      std::stringstream   linestream(line);
-      std::string         value;
-      int binToDecimal;
       // take the first binary code and convert to a decimal number
       binToDecimal = binaryConversion(line.substr(0,6));
-      // take the rest of the binary code and remove the code we already converted
-      line = line.substr(7);
-      performCommand(binToDecimal, line);
+      binary = line.substr(0,6);
+      binaryInt = atoi(binary.c_str());
+      memory[commandCounter] = binaryInt;
+      commandCounter++;
+
+      if(line.length() > 0)
+        performCommand(binToDecimal, line);
 
 
     }
@@ -377,7 +389,7 @@ void Syntasso::fillCommandOrder(string command){
 
         if(command == binCode[i].first){
 
-            commandOrder[usedC] = i;
+            //commandOrder[usedC] = i;
             usedC++;
         }
     }
@@ -390,13 +402,14 @@ void Syntasso::performCommand(int decimal, string line){
     int location1 = 0,
         location2 = 0,
         location3 = 0,
+        temp = 0,
         value;
+
     switch (decimal) {
 
         case 0:
         // !Stasi (hault)
-        //Noe
-
+            displayMemory();
             break;
 
         case 32:
@@ -411,6 +424,8 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 31:
         //+Add
+            line = line.substr(7);
+
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -419,16 +434,17 @@ void Syntasso::performCommand(int decimal, string line){
             break;
         case 30:
         // -Sub
+            line = line.substr(7);
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
-
             memory[numPar[location3].second] = memory[numPar[location1].second] - memory[numPar[location2].second];
 
             break;
 
         case 29:
         //*Mult
+            line = line.substr(7);
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -438,6 +454,7 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 28:
         // /Div
+            line = line.substr(7);
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -447,7 +464,7 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 27:
         //%Mod
-
+            line = line.substr(7);
             location1 = findReg(line);
             location2 = findReg(line);
             location3 = findReg(line);
@@ -458,9 +475,12 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 26:
         // ^Pow
-        //Noe
+            line = line.substr(7);
+            location1 = findReg(line);
+            location2 = findReg(line);
+            location3 = findReg(line);
 
-
+            memory[numPar[location3].second] = pow(memory[numPar[location1].second], memory[numPar[location2].second]);
             break;
 /*
         case 25:
@@ -484,18 +504,25 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 22:
         //>Ako (Input)
-        //Noe
+            line = line.substr(7);
+            location1 = findReg(line);
+            cout << "Enter an integer: (0 - 256)";
+            cin >> temp;
+            memory[numPar[location1].second] = temp;
 
             break;
 
         case 21:
         // <Lego (Output)
-        //Noe
+            line = line.substr(7);
+            location1 = findReg(line);
+            cout << memory[numPar[location1].second] << endl;
 
             break;
 
         case 20:
         // ?Lykis (SkipCond)
+            line = line.substr(7);
             location1 = findReg(line);
 
 
@@ -515,16 +542,15 @@ void Syntasso::performCommand(int decimal, string line){
             clearRegisters();
             break;
 
-        case
-         17:
-        // Deka
+          // case 17:
+          // // Deka
+          //
+          //     break;
 
-            break;
+          case 16:
+          //Epis (chars)
 
-        case 16:
-        //Epis
-
-            break;
+              break;
 
         default:
 
@@ -565,7 +591,7 @@ void Syntasso::clearRegisters(){
     return;
 }
 
-int Syntasso::findReg(std::string line)
+int Syntasso::findReg(std::string& line)
 {
   string binValue = line.substr(0, 4);
   for(int i = 0; i < CAPACITY; ++i)
@@ -577,8 +603,39 @@ int Syntasso::findReg(std::string line)
     }
   }
   return -1;
-
 } // end findReg
+
+void Syntasso::displayMemory()
+{
+  cout << "REGISTERS:\n";
+  cout.width(25); cout << left << "accumulator " << right << showpos << setfill('0') << left << setw(5) << setfill(' ') << endl;
+  cout.width(25); cout << left << "instructionCounter " << right << noshowpos << setw(5) << endl;
+  cout.width(25); cout << left << "instructionRegister  " << right << showpos << setw(5) << endl;
+  cout.width(25); cout << left << "operationCode " <<  right << noshowpos << setw(5) << endl;
+  cout.width(25); cout << left << "operand  " << right << noshowpos << setw(5) << endl;
+  cout << "\nMEMORY:" << endl << noshowpos;
+
+  cout << "  ";
+  for(int i = 0; i < 10; i++)
+  {
+    cout << setw(6) << right << noshowpos << i;
+  }
+  cout << endl;
+  int count = 0;
+  for(int ix = 0; ix < 100; ix++)
+  {
+    cout << noshowpos << setw(3) << right << ix * 10 << " ";
+    for(int j = 0; j < 10; j++)
+    {
+      cout << noshowpos << setfill('0') << right << setw(6) << memory[count] << " ";
+      count++;
+    }
+    cout << setfill(' ') << endl;
+  }
+  cout << endl;
+
+} // end displayMemory
+
 
 void Syntasso::skip(int value, char state){
     canSkip = false;

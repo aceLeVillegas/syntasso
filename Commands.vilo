@@ -76,7 +76,7 @@ omega (1111)
 (Example: @Kyklo Edo 5
           Edo &Sum mu)
 
-(Take in a value from )
+(Take in a value from user)
 22(010110)
 >Ako (First value is where the register will be stored in)
 
