@@ -24,8 +24,8 @@ Syntasso::Syntasso(){
     binCode[5].second = "011011";
     binCode[6].first = "^Pow";
     binCode[6].second = "011010";
-    binCode[7].first = "~Fortono";
-    binCode[7].second = "011001";
+    binCode[7].first = "Edo";
+    binCode[7].second = "2";
     binCode[8].first = "#Kryvo";
     binCode[8].second = "011000";
     binCode[9].first = "@Kyklo";
@@ -89,8 +89,8 @@ Syntasso::Syntasso(){
     numPar[5].second = 3;
     numPar[6].first = "^Pow";
     numPar[6].second = 3;
-    numPar[7].first = "~Fortono";
-    numPar[7].second = 1;
+    numPar[7].first = "Edo";
+    numPar[7].second = -1;
     numPar[8].first = "#Kryvo";
     numPar[8].second = 1;
     numPar[9].first = "@Kyklo";
@@ -110,47 +110,42 @@ Syntasso::Syntasso(){
     // The following registers are going to be assigned an index in memory array
     // starting at index 900 to 914
     numPar[16].first = "alpha";
-    numPar[16].second = 900;
+    numPar[16].second = 0;
     numPar[17].first = "beta";
-    numPar[17].second = 901;
+    numPar[17].second = 1;
     numPar[18].first = "gamma";
-    numPar[18].second = 902;
+    numPar[18].second = 2;
     numPar[19].first = "delta";
-    numPar[19].second = 903;
+    numPar[19].second = 3;
     numPar[20].first = "epsilon";
-    numPar[20].second = 904;
+    numPar[20].second = 4;
     numPar[21].first = "zeta";
-    numPar[21].second = 905;
+    numPar[21].second = 5;
     numPar[22].first = "eta";
-    numPar[22].second = 906;
+    numPar[22].second = 6;
     numPar[23].first = "theta";
-    numPar[23].second = 907;
+    numPar[23].second = 7;
     numPar[24].first = "iota";
-    numPar[24].second = 908;
+    numPar[24].second = 8;
     numPar[25].first = "kappa";
-    numPar[25].second = 909;
+    numPar[25].second = 9;
     numPar[26].first = "lambda";
-    numPar[26].second = 910;
+    numPar[26].second = 10;
     numPar[27].first = "mu";
-    numPar[27].second = 911;
+    numPar[27].second = 11;
     numPar[28].first = "sigma";
-    numPar[28].second = 912;
+    numPar[28].second = 12;
     numPar[29].first = "omicron";
-    numPar[29].second = 913;
+    numPar[29].second = 13;
     numPar[30].first = "omega";
-    numPar[30].second = 914;
+    numPar[30].second = 14;
 
+    parameters = -1;
+    usedC = 0;
 
     for(size_t i = 0; i < CAPACITY; i++){
 
-        commandOrder[i] = -1;
-    }
-    usedC = 0;
-
-    for(size_t i = 16; i < CAPACITY; i++){
-
-        memory[i] = 0;
-
+        commandOrder[i] = -10;
     }
 
     // initialize the array elements to 0 to get rid of trash values.
@@ -158,8 +153,6 @@ Syntasso::Syntasso(){
     {
       memory[i] = 0;
     }
-
-
 
 }
   std::string Syntasso::stringToBin(std::string word)
@@ -179,18 +172,26 @@ Syntasso::Syntasso(){
 
 bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
-    if(whiteSpace == 0){
+    // If the line were reading in is a line within the loop
+    if(word == "Edo" && whiteSpace == 0){
+
+        commandOrder[usedC].first = -1;
+        return ture;
+    }
+    // Command is the first value for the line being read in
+    else if(whiteSpace == 0 && word != "Edo" ){
 
         return searchPar(word);
     }
-    // to search and see if the parameters are registers, numbers, or words
+
+    // to search and see if the parameters are registers, numbers, or words IF IT the line starts with a comand
     else if(whiteSpace >= 1 && parameters >= whiteSpace){
 
         if(searchBin(word)){
 
             return true;
         }
-        // work on if we have time
+
         // checks to see if the first and onward parameters are either words or numbers
         else if( whiteSpace == 1 && ((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z'))){
 
@@ -203,6 +204,14 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
 
     }// end if
+    else if(whiteSpace == 1 && searchPar(word)){
+
+
+        whiteSpace--;
+        return searchPar(word);
+    }// end else if
+
+    // Condition for ?Lykis
     else if( whiteSpace == 2 &&
     ((searchBin(word) || ((word.length() == 1) &&
     (word == "N" || word == "P" || word == "Z") )
@@ -210,8 +219,6 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
         return true;
     }
-
-
 
     return false;
 
@@ -223,6 +230,7 @@ bool Syntasso::searchPar(std::string key){
         if(key == numPar[i].first){
 
             parameters = numPar[i].second;
+            commandOrder[usedC].second = binaryConversion(key);
 
             return true;
         }
@@ -274,7 +282,7 @@ string Syntasso::asciiToBin(int& decimal)
   return reverse;
 } // end asciiToBin
 
-    void Syntasso::readMnemonic(std::ifstream& inFile)
+void Syntasso::readMnemonic(std::ifstream& inFile)
     {
   int whiteSpace = 0;
   string line;
@@ -409,7 +417,6 @@ void Syntasso::performCommand(int decimal, string line){
 
             memory[numPar[location3].second] = memory[numPar[location1].second] + memory[numPar[location2].second];
             break;
-
         case 30:
         // -Sub
             location1 = findReg(line);

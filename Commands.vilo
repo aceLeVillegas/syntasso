@@ -72,8 +72,9 @@ omega (1111)
 (Will run though the given instructions followed)
 (if the line read in starts with -> it will signify that it is the start/end of the loop)
 23(010111)
-@Kyklo (First word that will indicate the start, Second word will indicate the end, Third is for how many iterations of commands wanted)
-(can have only 2 values if only repeating one line )
+@Kyklo (First word that will indicate which lines you want to loop on by writing "Edo", Second is for how many iterations of commands wanted)
+(Example: @Kyklo Edo 5
+          Edo &Sum mu)
 
 (Take in a value from )
 22(010110)

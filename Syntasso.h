@@ -65,7 +65,7 @@ class Syntasso{
       int parameters; // Holds how many parameter(s) command can have
       std::pair<std::string, std::string> binCode[CAPACITY]; // Holds what the binary representation is
       std::pair<std::string, int> numPar[CAPACITY];// holds the number of parameter are allowed
-      int commandOrder[CAPACITY]; // will use if loop is implemented.
+      pair< int, int>  commandOrder[CAPACITY];
       size_t usedC; // Counter for commandOrder[]
       bool canSkip;
 
