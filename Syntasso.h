@@ -33,7 +33,7 @@ class Syntasso{
         // Summary: Functions takes a command or register name and returns its predetermined value in binary code
         // found in the binCode table.
 
-        void readBin(std::ifstream& fin);
+        void readBin(std::ifstream& fin); //completed
         // Summary: Function will read a text file with binary values to be passed into the assembly simulator.
 
         void readMnemonic(std::ifstream& inFile); // completed TODO: @Kyklos command does not pass checkSyntax
@@ -43,7 +43,7 @@ class Syntasso{
         void fillCommandOrder(std::string command);
         // Summary: Function will take in the binary representation of the command and store the commands in commandOrder[]
 
-        void performCommand(int decimal, std::string line);
+        void performCommand(int decimal, std::string line); // completed
         // Summary: Takes in the binary representation of the command and the lne read in from the binary file then performs the specific operation.
 
         void clearRegisters();

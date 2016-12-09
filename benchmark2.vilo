@@ -1,0 +1,4 @@
+(1. create an array of 5 ints)
+(2. clear all registers)
+(3. ask user for a number to find in the array)
+(4. show message as to whether the number was found or not)

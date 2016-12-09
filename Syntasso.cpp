@@ -148,14 +148,10 @@ Syntasso::Syntasso(){
     }
     usedC = 0;
 
-    for(size_t i = 16; i < CAPACITY; i++){
-
-        memory[i] = 0;
-
-    }
-
     // initialize the array elements to 0 to get rid of trash values.
-    for(int i = 0; i < 1000; i++)
+    memory[0] = 50; // set alpha to point to index 50
+    memory[1] = 50; // set alpha to point to index 50
+    for(int i = 2; i < 1000; i++)
     {
       memory[i] = 0;
     }
@@ -335,6 +331,8 @@ void Syntasso::readBin(std::ifstream& inFile)
 {
   int binToDecimal;
   string line;
+  string binary;
+  long int binaryInt;
   int binCode;
   if(inFile.is_open())
   {
@@ -343,9 +341,10 @@ void Syntasso::readBin(std::ifstream& inFile)
     {
       // take the first binary code and convert to a decimal number
       binToDecimal = binaryConversion(line.substr(0,6));
-      // TODO:convert line.substr(0,6) to a binary int value
-      // TODO: store binary value in memory array
-      // take the rest of the binary code and remove the code we already converted
+      binary = line.substr(0,6);
+      binaryInt = atoi(binary.c_str());
+      memory[commandCounter] = binaryInt;
+      commandCounter++;
 
       if(line.length() > 0)
         performCommand(binToDecimal, line);
@@ -383,7 +382,7 @@ void Syntasso::performCommand(int decimal, string line){
     int location1 = 0,
         location2 = 0,
         location3 = 0,
-        temp = 0;
+        temp = 0,
         value;
 
     switch (decimal) {
@@ -609,11 +608,8 @@ void Syntasso::displayMemory()
     cout << noshowpos << setw(3) << right << ix * 10 << " ";
     for(int j = 0; j < 10; j++)
     {
-        if(memory[count] > 0)
-          cout << noshowpos << setfill(' ') << right << setw(7) << memory[count] << " ";
-        else
-          cout << showpos << setfill('0') << left << setw(7) << memory[count] << " ";
-        count++;
+      cout << noshowpos << setfill('0') << right << setw(6) << memory[count] << " ";
+      count++;
     }
     cout << setfill(' ') << endl;
   }
@@ -621,7 +617,6 @@ void Syntasso::displayMemory()
 
 } // end displayMemory
 
-} // end findReg
 
 void Syntasso::skip(int value, char state){
     canSkip = false;
