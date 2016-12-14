@@ -8,6 +8,12 @@
 #include <iomanip>
 using namespace std;
 
+
+// TODO: make the loop inception
+// TODO: Display in binary
+// TODO: create switch for Edo
+// TODO: finish switch for find  
+
 Syntasso::Syntasso(){
     commandCounter = 15;
     // Binary representation for each command
@@ -141,8 +147,10 @@ Syntasso::Syntasso(){
     numPar[30].first = "omega";
     numPar[30].second = 14;
 
+    // This is when Edo is stated first it needs to still find how many
+    // parameters it need since it hasnt seen the command yet
     parameters = -1;
-    usedC = 0;
+    usedC = -2;
 
     for(size_t i = 0; i < CAPACITY; i++){
 
@@ -176,6 +184,7 @@ Syntasso::Syntasso(){
 
 bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
+    //cout << "Command Order: " <<  commandOrder[usedC].first << endl;
     // If the line were reading in is a line within the loop
     if(word == "Edo" && whiteSpace == 0){
 
@@ -188,17 +197,41 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
         return searchPar(word);
     }
 
-    // to search and see if the parameters are registers, numbers, or words IF IT the line starts with a comand
+    // to search and see if the parameters are registers, numbers, or words IF IT the line starts with a command
     else if(whiteSpace >= 1 && parameters >= whiteSpace){
 
-        if(searchBin(word)){
+
+        if(whiteSpace == 1 && searchCom(word)){
+
+            cout << "whiteSpace == 1" << word <<endl;
+            whiteSpace--;
+            parameters++;
+
+            return true;
+        }// end else if
+
+        if(searchReg(word)){
 
             return true;
         }
         // checks to see if the first and onward parameters are either words or numbers
-        else if( whiteSpace == 1 && ((word[0] >= '0' && word[0] <= '9') || (word[0] >= 'a' && word[0] <= 'z'))){
+        else if( whiteSpace == 1 && word[0] >= '0' && word[0] <= '9'){
 
             return true;
+        }
+        // Condition for ?Lykis
+        else if(//commandOrder[usedC].first == 20 &&
+        (whiteSpace == 2) &&
+        (word == "N" || word == "P" || word == "Z")){
+
+            return true;
+        }
+        // Condition for @Kyklo
+        else if(//commandOrder[usedC].first == 23 &&
+        (whiteSpace == 2) &&
+         (word[0] >= '0' && word[0] <= '9')){
+
+             return true;
         }
         else{
 
@@ -206,38 +239,35 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
         }// end else
 
     }// end if
-    else if(whiteSpace == 1 && searchPar(word)){
 
 
-        whiteSpace--;
-        return searchPar(word);
-    }// end else if
 
-    // Condition for ?Lykis
-    else if(commandOrder[usedC].first == 20 &&
-    (whiteSpace == 2) &&
-    (word[0] >= '0' && word[0] <= '9'))
-)) ){
-
-        return true;
-    }
-    // Condition for @Kyklo
-    else if( commandOrder[usedC].second == 23 &&
-    (whiteSpace == 2) &&
-    (word == "N" || word == "P" || word == "Z") )
-))){
 
     return false;
 
 }
 bool Syntasso::searchPar(std::string key){
 
+    string holder;
     for(unsigned int i = 0; i < CAPACITY; i++){
 
         if(key == numPar[i].first){
 
             parameters = numPar[i].second;
-            commandOrder[usedC].second = binaryConversion(key);
+
+
+            holder = binCode[i].second;
+
+            cout << "Holder: " << holder << endl ;
+
+
+            commandOrder[usedC].first = binaryConversion(holder);
+
+            cout << "CommandOrder first : " << commandOrder[usedC].first << endl;
+
+            commandOrder[usedC].second = binaryConversion(holder);
+
+            cout << "Command Order second : " <<  commandOrder[usedC].second << endl;
 
             return true;
         }
@@ -246,18 +276,38 @@ bool Syntasso::searchPar(std::string key){
 
 
 }
-bool Syntasso::searchBin(std::string key){
+bool Syntasso::searchCom(std::string key){
 
-    for(unsigned int i = 0; i < CAPACITY; i++){
+    string holder;
+    for(unsigned int i = 0; i <= 15; i++){
 
         if(key == binCode[i].first){
 
+            holder = binCode[i].second;
+            commandOrder[usedC].second = binaryConversion(holder);
+
             return true;
         }
     }
     return false;
 
 }
+
+bool Syntasso::searchReg(std::string key){
+
+    for(unsigned int i = 16; i < CAPACITY; i++){
+
+        if(key == binCode[i].first){
+
+            //commandOrder[usedC].second = binaryConversion(holder);
+
+            return true;
+        }
+    }
+    return false;
+
+}
+
 
 int Syntasso::stringtoAscii(string& word)
 {
@@ -311,11 +361,13 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
       }
       else
       {
+        usedC++;
         while(getline(linestream,value, ' ' ))
 
         {
-            cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-             << "whiteSpace: " << whiteSpace << endl;
+            // /cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
+            //  << "whiteSpace: " << whiteSpace
+            //  << "parameters: " << parameters << endl << endl ;
           if(checkSyntax(value, whiteSpace))
           {
             value = stringToBin(value);
@@ -380,6 +432,14 @@ void Syntasso::readBin(std::ifstream& inFile)
     cout << "Unable to open file.\n";
     exit(1);
   }
+
+  for(int i = 0; i < CAPACITY; i++ ){
+
+      cout << commandOrder[i].first << endl
+            << commandOrder[i].second << endl;
+  }
+
+
 } // end readBin
 
 
