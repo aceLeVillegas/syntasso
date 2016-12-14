@@ -65,9 +65,9 @@ omega (1111)
 25(011001)
 ~Fortono (First value is where the register will be stored in)
 
-(Stores the value that is in the accumulator into the given register)
+(Looks in an array to find a specific value)
 24(011000)
-#Kryvo (First value is where the register will be stored in)
+#Evrima (First value is the head pointer, Second is the tail pointer, Third is the target)
 
 (Will run though the given instructions followed)
 (if the line read in starts with -> it will signify that it is the start/end of the loop)

@@ -27,7 +27,7 @@ Syntasso::Syntasso(){
     binCode[6].second = "011010";
     binCode[7].first = "Edo";
     binCode[7].second = "2";
-    binCode[8].first = "#Kryvo";
+    binCode[8].first = "#Evrima";
     binCode[8].second = "011000";
     binCode[9].first = "@Kyklo";
     binCode[9].second = "010111";
@@ -92,8 +92,8 @@ Syntasso::Syntasso(){
     numPar[6].second = 3;
     numPar[7].first = "Edo";
     numPar[7].second = -1;
-    numPar[8].first = "#Kryvo";
-    numPar[8].second = 1;
+    numPar[8].first = "#Evrima";
+    numPar[8].second = 3;
     numPar[9].first = "@Kyklo";
     numPar[9].second = 2;
     numPar[10].first = ">Ako";
@@ -214,21 +214,22 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
     }// end else if
 
     // Condition for ?Lykis
-    else if(commandOrder[usedC].first == 20 &&
-    (whiteSpace == 2) &&
-    (word[0] >= 'a' && word[0] <= 'z'))
-)) ){
+//     else if(commandOrder[usedC].first == 20 &&
+//     (whiteSpace == 2) &&
+//     (word[0] >= 'a' && word[0] <= 'z'))
+// )) ){
 
         return true;
-    }
+    //}
     // Condition for @Kyklo
-    else if( commandOrder[usedC].second == 23 &&
-    (whiteSpace == 2) &&
-    (word == "N" || word == "P" || word == "Z") )
-))){
+//     else if( commandOrder[usedC].second == 23 &&
+//     (whiteSpace == 2) &&
+//     (word == "N" || word == "P" || word == "Z") )
+// )){
 
     return false;
 
+  //}
 }
 bool Syntasso::searchPar(std::string key){
 
@@ -326,7 +327,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
           {
             cout << "Koino : "  << line << endl;
             cout << "Program terminated abnormally." << endl;
-            cout << value << endl;
+            cout << value << " caused a syntax error." << endl;
             exit(1);
           }
 
@@ -488,18 +489,17 @@ void Syntasso::performCommand(int decimal, string line){
         // Sarah
         // Remove Command not needed
             break;
-
+*/
         case 24:
         // #Kyklo (Store)
-        // Sarah
-        // Remove Command not needed
+
 
             break;
-*/
+
         case 23:
         //@Kyklo (Loop)
         // Sarah
-
+        find(numPar[16].second, numPar[17].second, memory[2]);
             break;
 
         case 22:

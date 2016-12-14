@@ -8,4 +8,4 @@ Edo >Ako beta
 Edo +Add 1 beta beta (will increment beta by one)
 |Exa (clear all the registers)
 >Ako gamma (ask user for value to look for in the array)
-Eurima alpha beta gamma (find function to look for value in array)
+#Evrima alpha beta gamma (look for value in array)
