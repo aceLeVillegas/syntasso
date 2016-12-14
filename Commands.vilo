@@ -67,7 +67,7 @@ omega (1111)
 
 (Looks in an array to find a specific value)
 24(011000)
-#Evrima (First value is the head pointer, Second is the tail pointer, Third is the target)
+#Evrima (First value is the target)
 
 (Will run though the given instructions followed)
 (if the line read in starts with -> it will signify that it is the start/end of the loop)

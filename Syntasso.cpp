@@ -11,7 +11,6 @@ using namespace std;
 
 // TODO: make the loop inception
 // TODO: Display in binary
-// TODO: create switch for Edo
 // TODO: finish switch for find
 
 Syntasso::Syntasso(){
@@ -32,7 +31,7 @@ Syntasso::Syntasso(){
     binCode[6].first = "^Pow";
     binCode[6].second = "011010";
     binCode[7].first = "Edo";
-    binCode[7].second = "2";
+    binCode[7].second = "011001";
     binCode[8].first = "#Evrima";
     binCode[8].second = "011000";
     binCode[9].first = "@Kyklo";
@@ -99,7 +98,7 @@ Syntasso::Syntasso(){
     numPar[7].first = "Edo";
     numPar[7].second = -1;
     numPar[8].first = "#Evrima";
-    numPar[8].second = 3;
+    numPar[8].second = 1;
     numPar[9].first = "@Kyklo";
     numPar[9].second = 2;
     numPar[10].first = ">Ako";
@@ -543,16 +542,17 @@ void Syntasso::performCommand(int decimal, string line){
 
             memory[numPar[location3].second] = pow(memory[numPar[location1].second], memory[numPar[location2].second]);
             break;
-/*
-        case 25:
-        //~Fortono (Load)
-        // Sarah
-        // Remove Command not needed
-            break;
-*/
-        case 24:
-        // #Kyklo (Store)
 
+        case 25:
+        //Edo (Load)
+
+            break;
+
+        case 24:
+        // #Evrima (Find)
+            line = line.substr(7);
+            location1 = findReg(line);
+            find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
 
@@ -725,7 +725,7 @@ void Syntasso::skip(int value, char state){
 
 }// end of skip()
 
-bool Syntasso::find(int headPtr, int tailPtr, int target)
+bool Syntasso::find(int& headPtr, int& tailPtr, int& target)
 {
   bool isFound = false;
   for(int i = headPtr; i < tailPtr; ++i)
