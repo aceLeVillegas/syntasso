@@ -17,7 +17,10 @@ class Syntasso{
         // Summary: Takes in the word read in by a file and shecks if it is a Command , register, number and word.
         bool searchPar(std::string key);
         // Summary: Goes through numPar[] and checks if the key is present and sets parameters to the value at the key
-        bool searchBin(std::string key);
+        bool searchCom(std::string key);
+        // Summary: Goes through binCode[] and checks if the key is present
+
+        bool searchReg(std::string key);
         // Summary: Goes through binCode[] and checks if the key is present
 
         int stringtoAscii(std::string& word); //completed
