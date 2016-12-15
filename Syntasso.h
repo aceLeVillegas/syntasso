@@ -39,7 +39,7 @@ class Syntasso{
         // Summary: Functions takes a command or register name and returns its predetermined value in binary code
         // found in the binCode table.
 
-        void readBin(std::ifstream& fin); //completed
+        void readBin(std::ifstream& inFile); //completed
         // Summary: Function will read a text file with binary values to be passed into the assembly simulator.
 
         void readMnemonic(std::ifstream& inFile); // completed TODO: @Kyklos command does not pass checkSyntax
@@ -68,12 +68,11 @@ class Syntasso{
         // Function will iterate beginning at the head of array and compare values at every index until
         // it reaches the end of the the array at tailPtr. Will return true if value is found or false if not found.
 
-        void fillCommandOrder(int decimal, std::string line);
+        void fillCommandOrder(std::ifstream& fin);
         // Function will set the numerical value for the commad and saves the binary converted line into the commandOrder array
-/*
+
         bool loopCommand();
         // Function will call other commands to repeat the amount of time given by the iterator
-*/
 
     private:
       int counter;

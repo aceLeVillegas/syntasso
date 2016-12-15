@@ -150,7 +150,7 @@ Syntasso::Syntasso(){
     // parameters it need since it hasnt seen the command yet
     parameters = -1;
     usedC = 0;
-    commandCounter = 0;
+
 
     for(size_t i = 0; i < CAPACITY; i++){
 
@@ -396,51 +396,44 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
 
 void Syntasso::readBin(std::ifstream& inFile)
 {
-  int binToDecimal;
-  string line;
-  string binary;
-  long int binaryInt;
-  int binCode;
-  if(inFile.is_open())
-  {
-    cout << "Successfully opened  binary file!" << endl;
-    while(getline(inFile, line))
+    int binToDecimal;
+    string line;
+    string binary;
+    long int binaryInt;
+    int binCode;
+    if(inFile.is_open())
     {
-      // take the first binary code and convert to a decimal number
-      binToDecimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
-      binary = line.substr(0,6); //This is the string version of command
-      binaryInt = atoi(binary.c_str()); //This is the REAL binary number that will be stored in memory
-      memory[commandCounter] = binaryInt;
-      commandCounter++;
+        cout << "Successfully opened  binary file!" << endl;
+        while(getline(inFile, line))
+        {
+            // take the first binary code and convert to a decimal number
+            binToDecimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
+            binary = line.substr(0,6); //This is the string version of command
+            binaryInt = atoi(binary.c_str()); //This is the REAL binary number that will be stored in memory
+            memory[commandCounter] = binaryInt;
+            commandCounter++;
 
-      if(line.length() > 0){
-        //cout << "Hi" << endl;
-        //cout << "Line before performCommand() " << line << endl;
-        fillCommandOrder(binToDecimal, line);
-        performCommand(binToDecimal, line);
-        //cout << "Line afterwards performCommand() " << line << endl;
+            if(line.length() > 0)
+                performCommand(binToDecimal, line);
 
-        fillCommandOrder(binToDecimal, line);
-        //cout << "Test! " << endl;
-      }
-    }
+        }// end of while
 
     // close the file before exiting
     inFile.close();
-  }
-  else
-  {
-    cout << "Unable to open file.\n";
-    exit(1);
-  }
+    }// end of if
+    else
+    {
+        cout << "Unable to open file.\n";
+        exit(1);
+    }// end else
 
-  for(int i = 0; i < CAPACITY; i++ ){
+    for(int i = 0; i < CAPACITY; i++ ){
 
-      cout << commandOrder[i].first << endl
-            << commandOrder[i].second << endl;
-  }
+        cout << commandOrder[i].first << endl
+        << commandOrder[i].second << endl;
+    }
 
-  cout << endl << "usedC should == 7  " << usedC << endl;
+    cout << endl << "usedC should == 7  " << usedC << endl;
 } // end readBin
 
 void Syntasso::performCommand(int decimal, string line){
@@ -548,10 +541,23 @@ void Syntasso::performCommand(int decimal, string line){
         // Sarah
 
             line = line.substr(7);
-            location1 = findReg(line);
-            iterator = findReg(line);
 
-            //isThere = loopCommand();
+            location1 = findReg(line);
+            cout << "location 1: " << location1 << endl
+                << "LINE: " << line << endl;
+            iterator = binaryConversion(line);
+            cout << "iterator: " << iterator << endl;
+
+            if(loopCommand()){
+
+                cout << "Success !" << endl;
+            }
+            else{
+
+                cout << "Try harder!" << endl;
+            }
+
+
             find(numPar[16].second, numPar[17].second, memory[2]);
 
             break;
@@ -648,6 +654,7 @@ void Syntasso::clearRegisters(){
 int Syntasso::findReg(std::string& line)
 {
   string binValue = line.substr(0, 4);
+  //cout << "BinVal: " << binValue << endl;
   for(int i = 0; i < CAPACITY; ++i)
   {
     if(binCode[i].second == binValue)
@@ -731,16 +738,49 @@ bool Syntasso::find(int& headPtr, int& tailPtr, int& target)
 }
 
 
-void Syntasso::fillCommandOrder(int decimal, std::string sentence){
+void Syntasso::fillCommandOrder(std::ifstream& fin){
 
-    commandOrder[usedC].first = decimal;
-    //cout << "usedC " << usedC << endl;
-    //cout << "sentence" << sentence << endl;
-    sentence = sentence.substr(7); // gets rid of EDO when Passed into performCommand()
-    //cout << "usedC " << usedC << endl;
-    commandOrder[usedC].second = sentence;
+    int decimal;
+    string line;
+    if(fin.is_open())
+    {
 
-    usedC++;
+        while(getline(fin, line)){
+        // take the first binary code and convert to a decimal number
+        decimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
+        if(line.length() > 0){
+
+            commandOrder[usedC].first = decimal;
+            //cout << "usedC " << usedC << endl;
+            //cout << "sentence" << sentence << endl;
+            //cout << "Line: " << line  << endl;
+
+            line = line.substr(7); // gets rid of EDO when Passed into performCommand()
+
+
+            //cout << "usedC " << usedC << endl;
+            commandOrder[usedC].second = line;
+
+            usedC++;
+        }
+
+
+        }// end of while
+        fin.close();
+    }// end of if
+    else{
+        cout << "You Done Messed Up.\n";
+        exit(1);
+    }
+
+    //
+    // for(int i = 0; i < CAPACITY; i++ ){
+    //
+    //     cout << commandOrder[i].first << endl
+    //     << commandOrder[i].second << endl;
+    // }
+
+
     return;
 
 }
@@ -749,9 +789,39 @@ bool Syntasso::loopCommand(){
 
     size_t start = -1,
             end = -1;
+    bool isfirst;
+    string command;
+    int decCom;
 
-    for(size_t i = 0; i < usedC)
+    for(size_t i = 0; i < usedC; i++){
 
+        if(commandOrder[i].first == 25 && commandOrder[i + 1].first != 25){
+            end = i;
+
+        }
+        if(isfirst && commandOrder[i].first == 25 ){
+
+            start = i;
+            isfirst = false;
+        }
+    }// end of for
+
+    if(start == -1 && end == -1){
+        return false;
+    }
+    cout << "iterator " << iterator << endl ;
+    for(size_t j = 0; j < iterator; j++){
+
+        for(size_t k = start; k <= end; k++ ){
+
+            command = commandOrder[k].second.substr(0,6);
+
+            decCom = binaryConversion(command);
+            cout << "I'm on top" << endl;
+            performCommand(decCom, commandOrder[k].second);
+        }
+    }
+    return true;
 }
 
 
