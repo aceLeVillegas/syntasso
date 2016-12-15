@@ -11,7 +11,6 @@ using namespace std;
 
 // TODO: make the loop inception
 // TODO: Display in binary
-// TODO: create switch for Edo
 // TODO: finish switch for find
 
 Syntasso::Syntasso(){
@@ -32,8 +31,8 @@ Syntasso::Syntasso(){
     binCode[6].first = "^Pow";
     binCode[6].second = "011010";
     binCode[7].first = "Edo";
-    binCode[7].second = "2";
-    binCode[8].first = "#Kryvo";
+    binCode[7].second = "011001";
+    binCode[8].first = "#Evrima";
     binCode[8].second = "011000";
     binCode[9].first = "@Kyklo";
     binCode[9].second = "010111";
@@ -98,7 +97,7 @@ Syntasso::Syntasso(){
     numPar[6].second = 3;
     numPar[7].first = "Edo";
     numPar[7].second = -1;
-    numPar[8].first = "#Kryvo";
+    numPar[8].first = "#Evrima";
     numPar[8].second = 1;
     numPar[9].first = "@Kyklo";
     numPar[9].second = 2;
@@ -246,6 +245,7 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
     return false;
 
+  //}
 }
 bool Syntasso::searchPar(std::string key){
 
@@ -325,6 +325,8 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
   int whiteSpace = 0;
   string line;
   ofstream fout;
+  int temp;
+  string leadZero;
   fout.open("binCode.vilo",ios::out);
   if(inFile.is_open())
   {
@@ -349,7 +351,19 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
             // /cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
             //  << "whiteSpace: " << whiteSpace
             //  << "parameters: " << parameters << endl << endl ;
-          if(checkSyntax(value, whiteSpace))
+          if(value.length() <= 4 && isdigit(value[0]))
+          {
+            temp = stoi(value);//if it's a string number convert it to an int
+            value = decimalToBinary(temp); //convert the int into a string binary
+            for(int i = value.length(); i <= 4; ++i)
+            {
+              leadZero += "0";
+            }
+            value = leadZero + value;
+            fout << value << " ";
+            cout << "test is digit**************" << endl;
+          }
+          else if(checkSyntax(value, whiteSpace))
           {
             value = stringToBin(value);
             fout << value << " ";
@@ -359,7 +373,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
           {
             cout << "Koino : "  << line << endl;
             cout << "Program terminated abnormally." << endl;
-            cout << value << endl;
+            cout << value << " caused a syntax error." << endl;
             exit(1);
           }
 
@@ -393,19 +407,22 @@ void Syntasso::readBin(std::ifstream& inFile)
     while(getline(inFile, line))
     {
       // take the first binary code and convert to a decimal number
-      binToDecimal = binaryConversion(line.substr(0,6));
-      binary = line.substr(0,6);
-      binaryInt = atoi(binary.c_str());
+      binToDecimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
+      binary = line.substr(0,6); //This is the string version of command
+      binaryInt = atoi(binary.c_str()); //This is the REAL binary number that will be stored in memory
       memory[commandCounter] = binaryInt;
       commandCounter++;
 
-      if(line.length() > 0)
-        cout << "Line before performCommand() " << line << endl;
+      if(line.length() > 0){
+        //cout << "Hi" << endl;
+        //cout << "Line before performCommand() " << line << endl;
+        fillCommandOrder(binToDecimal, line);
         performCommand(binToDecimal, line);
-        cout << "Line afterwards performCommand() " << line << endl;
+        //cout << "Line afterwards performCommand() " << line << endl;
 
-        //fillCommandOrder(binToDecimal, line);
-        cout << "Test! " << endl;
+        fillCommandOrder(binToDecimal, line);
+        //cout << "Test! " << endl;
+      }
     }
 
     // close the file before exiting
@@ -512,20 +529,20 @@ void Syntasso::performCommand(int decimal, string line){
 
             memory[numPar[location3].second] = pow(memory[numPar[location1].second], memory[numPar[location2].second]);
             break;
-/*
+
         case 25:
-        //~Fortono (Load)
-        // Sarah
-        // Remove Command not needed
+        //Edo (Load)
+
             break;
 
         case 24:
-        // #Kyklo (Store)
-        // Sarah
-        // Remove Command not needed
+        // #Evrima (Find)
+            line = line.substr(7);
+            location1 = findReg(line);
+            //find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
-*/
+
         case 23:
         //@Kyklo (Loop)
         // Sarah
@@ -535,7 +552,7 @@ void Syntasso::performCommand(int decimal, string line){
             iterator = findReg(line);
 
             //isThere = loopCommand();
-
+            find(numPar[16].second, numPar[17].second, memory[2]);
 
             break;
 
@@ -702,7 +719,7 @@ void Syntasso::skip(int value, char state){
 
 }// end of skip()
 
-bool Syntasso::find(int headPtr, int tailPtr, int target)
+bool Syntasso::find(int& headPtr, int& tailPtr, int& target)
 {
   bool isFound = false;
   for(int i = headPtr; i < tailPtr; ++i)
@@ -713,24 +730,50 @@ bool Syntasso::find(int headPtr, int tailPtr, int target)
   return isFound;
 }
 
+
 void Syntasso::fillCommandOrder(int decimal, std::string sentence){
 
-    string temp;
-
     commandOrder[usedC].first = decimal;
-    cout << "usedC " << usedC << endl;
-    cout << "sentence" << sentence << endl;
-    sentence = sentence.substr(6); // gets rid of EDO when Passed into performCommand()
-    cout << "usedC " << usedC << endl;
+    //cout << "usedC " << usedC << endl;
+    //cout << "sentence" << sentence << endl;
+    sentence = sentence.substr(7); // gets rid of EDO when Passed into performCommand()
+    //cout << "usedC " << usedC << endl;
     commandOrder[usedC].second = sentence;
 
     usedC++;
     return;
 
 }
-/*
+
 bool Syntasso::loopCommand(){
 
+    size_t start = -1,
+            end = -1;
+
+    for(size_t i = 0; i < usedC)
 
 }
-*/
+
+
+string Syntasso::decimalToBinary(int decimal)
+{
+  int remainder = 0;
+  int base = 2;
+  std::string bin = "";
+  int i = 0;
+  std::string reverse = "";
+  while(decimal > 0)
+  {
+    remainder = decimal % 2;
+    decimal = decimal / 2;
+
+    //std::cout << "decimal: " << decimal << std::endl;
+    std::cout << "remainder: " << remainder << std::endl;
+    bin += '0' + remainder;
+    i++;
+  } // end while
+  for(int i = bin.length(); i >= 0; i--)
+    reverse += bin[i];
+
+  return reverse;
+} // end decimalToBinary

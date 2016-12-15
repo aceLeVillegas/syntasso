@@ -27,6 +27,8 @@ class Syntasso{
         int stringtoAscii(std::string& word); //completed
         // Summary: Function will take a string that will be converted to its ascii value.
 
+        std::string decimalToBinary(int decimal);
+
         int binaryConversion(std::string binary);
         // Summary: Function will take a binary string that will be converted to its decimal value.
 
@@ -62,7 +64,7 @@ class Syntasso{
         void skip(int value, char state);
         // Function will skip the next command depending on the condition given by the state
 
-        bool find(int headPtr, int tailPtr, int target);
+        bool find(int& headPtr, int& tailPtr, int& target);
         // Function will iterate beginning at the head of array and compare values at every index until
         // it reaches the end of the the array at tailPtr. Will return true if value is found or false if not found.
 
