@@ -17,6 +17,7 @@ class Syntasso{
         // Summary: Takes in the word read in by a file and shecks if it is a Command , register, number and word.
         bool searchPar(std::string key);
         // Summary: Goes through numPar[] and checks if the key is present and sets parameters to the value at the key
+
         bool searchCom(std::string key);
         // Summary: Goes through binCode[] and checks if the key is present
 
@@ -62,13 +63,18 @@ class Syntasso{
         // Function will display a visual representation of the Syntasso memory.
 
         void skip(int value, char state);
+        // Function will skip the next command depending on the condition given by the state
 
         bool find(int& headPtr, int& tailPtr, int& target);
         // Function will iterate beginning at the head of array and compare values at every index until
-        // it reaches the end of the the array at tailPtr.  Will return true if value is found or false if not found.
+        // it reaches the end of the the array at tailPtr. Will return true if value is found or false if not found.
 
-
-
+        void fillCommandOrder(int decimal, std::string line);
+        // Function will set the numerical value for the commad and saves the binary converted line into the commandOrder array
+/*
+        bool loopCommand();
+        // Function will call other commands to repeat the amount of time given by the iterator
+*/
 
     private:
       int counter;
@@ -77,9 +83,10 @@ class Syntasso{
       int parameters; // Holds how many parameter(s) command can have
       std::pair<std::string, std::string> binCode[CAPACITY]; // Holds what the binary representation is
       std::pair<std::string, int> numPar[CAPACITY];// holds the number of parameter are allowed
-      std::pair< int, int>  commandOrder[CAPACITY];
+      std::pair<int, std::string>  commandOrder[CAPACITY];
       size_t usedC; // Counter for commandOrder[]
-      size_t commandCounter;
+      size_t commandCounter; // might not need this one
+      size_t iterator;
       bool canSkip;
 
 
