@@ -10,26 +10,26 @@
 
 (***List of given registers and their names)
 
-alpha (pointer type only)(0001)
-beta  (pointer type only)(0010)
+alpha (pointer type only)0(0001)
+beta  (pointer type only)1(0010)
 (Registers below can hold a string)
-gamma (0011)
-delta (0100)
-epsilon (0101)
+gamma 3(0011)
+delta 4(0100)
+epsilon 5(0101)
 
 (Registers below can hold a letter value)
-zeta (0110)
-eta (0111)
-theta (1000)
+zeta 6(0110)
+eta 7(0111)
+theta 8(1000)
 
 (All registers below will hold integer values)
-iota (1001)
-kappa (1010)
-lambda (1011)
-mu (1100)
-sigma (1101)
-omicron (1110)
-omega (1111)
+iota 9(1001)
+kappa 10(1010)
+lambda 11(1011)
+mu 12(1100)
+sigma 13(1101)
+omicron 14(1110)
+omega 15(1111)
 
 
 (Grabs input then stores input in the desired register)
@@ -61,13 +61,16 @@ omega (1111)
 26(011010)
 ^Pow (First value is the base, Second is the power raised, Third the register saved in)
 
-(Loads the value that is in the given register to the accumulator)
 25(011001)
+Edo (signifies that there is a command being repeated)
+
+(Loads the value that is in the given register to the accumulator)
+
 ~Fortono (First value is where the register will be stored in)
 
-(Looks in an array to find a specific value)
+(Stores the value that is in the accumulator into the given register)
 24(011000)
-#Evrima (First value is the target)
+#Kryvo (First value is where the register will be stored in)
 
 (Will run though the given instructions followed)
 (if the line read in starts with -> it will signify that it is the start/end of the loop)

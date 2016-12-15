@@ -9,18 +9,18 @@ using namespace std;
 int main()
 {
 
-  // ifstream inFile("benchmark1.vilo");
-  // ifstream fin("binCode.vilo");
-  // ifstream read("binCode.vilo");
-  //
+  ifstream inFile("benchmark1.vilo");
+  ifstream fin("binCode.vilo");
+  ifstream read("binCode.vilo");
+
   // //string line;
    Syntasso test;
   //
-  // test.readMnemonic(inFile);
-  // test.fillCommandOrder(read);
-  // test.readBin(fin);
+  test.readMnemonic(inFile);
+  test.fillCommandOrder(read);
+  test.readBin(fin);
 
-  cout << test.binaryConversion("0011") << endl;
+  // cout << test.binaryConversion("0011") << endl;
 
   // string bin = "101101";
   // long int binFinal;
