@@ -689,23 +689,6 @@ void Syntasso::displayMemory()
   // cout.width(25); cout << left << "operand  " << right << noshowpos << setw(5) << endl;
   // cout << "\nMEMORY:" << endl << noshowpos;
 
-
-
-  for(size_t i = 0; i < 15; i++ ){
-
-      cout << "{" << i << "}" << memory[i] << " | ";
-  }
-
-  cout << "\n\n\n\n\n\n\n\n\n\n\n\n";
-
-
-
-
-
-
-
-
-
   cout << "  ";
   for(int i = 0; i < 10; i++)
   {
