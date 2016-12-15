@@ -28,6 +28,7 @@ class Syntasso{
         // Summary: Function will take a string that will be converted to its ascii value.
 
         std::string decimalToBinary(int decimal);
+        // Summary: Function will take an int that will be converted to a string with binary value.
 
         int binaryConversion(std::string binary);
         // Summary: Function will take a binary string that will be converted to its decimal value.
@@ -64,7 +65,7 @@ class Syntasso{
         void skip(int value, char state);
         // Function will skip the next command depending on the condition given by the state
 
-        bool find(int& headPtr, int& tailPtr, int& target);
+        bool find(int& headPtr, int& tailPtr, int& target); // completed
         // Function will iterate beginning at the head of array and compare values at every index until
         // it reaches the end of the the array at tailPtr. Will return true if value is found or false if not found.
 
@@ -84,7 +85,7 @@ class Syntasso{
       std::pair<int, std::string>  commandOrder[CAPACITY];
       size_t usedC; // Counter for commandOrder[]
       size_t commandCounter; // might not need this one
-      size_t iterator;
+      int iterator;
       bool canSkip;
 
 

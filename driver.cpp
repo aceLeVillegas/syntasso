@@ -22,5 +22,10 @@ int main()
 
   cout << test.binaryConversion("0011") << endl;
 
+  // string bin = "101101";
+  // long int binFinal;
+  // binFinal = atoi(bin.c_str());
+  // cout << "finalBin " << binFinal << endl;
+
   return EXIT_SUCCESS;
 }// end main

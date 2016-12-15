@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <iomanip>
+#include <cassert>
 using namespace std;
 
 
@@ -150,7 +151,6 @@ Syntasso::Syntasso(){
     // parameters it need since it hasnt seen the command yet
     parameters = -1;
     usedC = 0;
-
 
     for(size_t i = 0; i < CAPACITY; i++){
 
@@ -354,14 +354,14 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
           if(value.length() <= 4 && isdigit(value[0]))
           {
             temp = stoi(value);//if it's a string number convert it to an int
+            assert(temp <= 256 && temp >=0);
             value = decimalToBinary(temp); //convert the int into a string binary
             for(int i = value.length(); i <= 4; ++i)
             {
-              leadZero += "0";
+              leadZero += '0';
             }
             value = leadZero + value;
             fout << value << " ";
-            cout << "test is digit**************" << endl;
           }
           else if(checkSyntax(value, whiteSpace))
           {
@@ -437,12 +437,14 @@ void Syntasso::readBin(std::ifstream& inFile)
 } // end readBin
 
 void Syntasso::performCommand(int decimal, string line){
-
+    string binary;
     int location1 = 0,
         location2 = 0,
-        location3 = 0,
-        temp = 0,
-        value;
+        location3 = 0;
+    unsigned int finalBin;
+        int value;
+        int temp;
+
     bool isThere;
 
     switch (decimal) {
@@ -532,7 +534,7 @@ void Syntasso::performCommand(int decimal, string line){
         // #Evrima (Find)
             line = line.substr(7);
             location1 = findReg(line);
-            //find(numPar[16].second, iterator, memory[numPar[location1].second]);
+            find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
 
@@ -568,6 +570,11 @@ void Syntasso::performCommand(int decimal, string line){
             location1 = findReg(line);
             cout << "Enter an integer: (0 - 256)";
             cin >> temp;
+            binary = decimalToBinary(temp);
+            //cout << "binary " << binary << endl;
+
+            // finalBin = atoi(binary.c_str());
+            // cout << "finalBin " << atoi(binary.c_str()) << endl;
             memory[numPar[location1].second] = temp;
 
             break;
@@ -785,6 +792,7 @@ void Syntasso::fillCommandOrder(std::ifstream& fin){
 
 }
 
+
 bool Syntasso::loopCommand(){
 
     size_t start = -1,
@@ -824,7 +832,6 @@ bool Syntasso::loopCommand(){
     return true;
 }
 
-
 string Syntasso::decimalToBinary(int decimal)
 {
   int remainder = 0;
@@ -837,8 +844,6 @@ string Syntasso::decimalToBinary(int decimal)
     remainder = decimal % 2;
     decimal = decimal / 2;
 
-    //std::cout << "decimal: " << decimal << std::endl;
-    std::cout << "remainder: " << remainder << std::endl;
     bin += '0' + remainder;
     i++;
   } // end while
