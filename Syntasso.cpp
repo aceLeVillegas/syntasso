@@ -43,7 +43,7 @@ Syntasso::Syntasso(){
     binCode[11].second = "010101";
     binCode[12].first = "?Lykis";
     binCode[12].second = "010100";
-    binCode[13].first = "$Alma";
+    binCode[13].first = "~Kryvo";
     binCode[13].second = "010011";
     binCode[14].first = "|Exa";
     binCode[14].second = "010010";
@@ -108,8 +108,8 @@ Syntasso::Syntasso(){
     numPar[11].second = 1;
     numPar[12].first = "?Lykis";
     numPar[12].second = 1;
-    numPar[13].first = "$Alma";
-    numPar[13].second = 1;
+    numPar[13].first = "~Kryvo";
+    numPar[13].second = 0;
     numPar[14].first = "|Exa";
     numPar[14].second = 0;
     numPar[15].first = "!Stasi";
@@ -440,7 +440,8 @@ void Syntasso::performCommand(int decimal, string line){
     string binary;
     int location1 = 0,
         location2 = 0,
-        location3 = 0;
+        location3 = 0,
+        arrayValue = 0;
     unsigned int finalBin;
         int value;
         int temp;
@@ -537,6 +538,7 @@ void Syntasso::performCommand(int decimal, string line){
         // #Evrima (Find)
             line = line.substr(7);
             location1 = findReg(line);
+            // This will output  0 if target was found or 1 if it is found.
             cout << find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
@@ -603,8 +605,14 @@ void Syntasso::performCommand(int decimal, string line){
             break;
 
         case 19:
-        // $Alma (Jump)
-        //Noe
+        // ~Kryvo (Array)
+            // This will create a for loop setting i = index 50
+
+            cout << "Enter a number: (0 - 256)";
+            cin >> arrayValue;
+            memory[numPar[16].second] = arrayValue;
+            numPar[16].second += 1;
+
 
             break;
 
@@ -656,11 +664,13 @@ int Syntasso::binaryConversion(std::string binary)
 
 void Syntasso::clearRegisters(){
 
-    for(size_t i = 16; i < CAPACITY; i++){
+    for(size_t i = 2; i < 16; i++){
 
         memory[i] = 0;
 
     }
+    memory[0] = 50; // Reset alpha back to its starting point
+    memory[1] = 50; // Reset beta back to its starting point
     return;
 }
 
@@ -790,11 +800,11 @@ void Syntasso::fillCommandOrder(std::ifstream& fin){
     }
 
     //
-    for(int i = 0; i < CAPACITY; i++ ){
-
-        cout << commandOrder[i].first << endl
-        << commandOrder[i].second << endl;
-    }
+    // for(int i = 0; i < CAPACITY; i++ ){
+    //
+    //     cout << commandOrder[i].first << endl
+    //     << commandOrder[i].second << endl;
+    // }
 
 
     return;
