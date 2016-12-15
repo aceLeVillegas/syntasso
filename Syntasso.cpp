@@ -408,6 +408,7 @@ void Syntasso::readBin(std::ifstream& inFile)
             commandCounter++;
 
             if(line.length() > 0)
+                line= line.substr(0, line.length() - 1);
                 performCommand(binToDecimal, line);
 
         }// end of while
@@ -441,6 +442,7 @@ void Syntasso::performCommand(int decimal, string line){
 
     bool isThere;
 
+    line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
 
     switch (decimal) {
 
@@ -466,73 +468,87 @@ void Syntasso::performCommand(int decimal, string line){
         //+Add
 
             line = line.substr(7);
-
             tempDigit = line.substr(0,2);
-
+            // only for integer for the first perameter
             location1 = binaryConversion(tempDigit);
-
-
             line = line.substr(3);
-
             location2 = findReg(line);
             line = line.substr(0, 4);
-
-
             location3 = findReg(line);
-
-
+            // saves into the designated register
             memory[numPar[location3].second] = location1 + memory[numPar[location2].second];
 
             break;
         case 30:
         // -Sub
             line = line.substr(7);
-            location1 = findReg(line);
+            tempDigit = line.substr(0,2);
+            // only for integer for the first perameter
+            location1 = binaryConversion(tempDigit);
+            line = line.substr(3);
             location2 = findReg(line);
+            line = line.substr(0, 4);
             location3 = findReg(line);
-            memory[numPar[location3].second] = memory[numPar[location1].second] - memory[numPar[location2].second];
+            // saves into the designated register
+            memory[numPar[location3].second] = location1 - memory[numPar[location2].second];
 
             break;
 
         case 29:
         //*Mult
             line = line.substr(7);
-            location1 = findReg(line);
+            tempDigit = line.substr(0,2);
+            // only for integer for the first perameter
+            location1 = binaryConversion(tempDigit);
+            line = line.substr(3);
             location2 = findReg(line);
+            line = line.substr(0, 4);
             location3 = findReg(line);
-
-            memory[numPar[location3].second] = memory[numPar[location1].second] * memory[numPar[location2].second];
+            // saves into the designated register
+            memory[numPar[location3].second] = location1 * memory[numPar[location2].second];
             break;
 
         case 28:
         // /Div
             line = line.substr(7);
-            location1 = findReg(line);
+            tempDigit = line.substr(0,2);
+            // only for integer for the first perameter
+            location1 = binaryConversion(tempDigit);
+            line = line.substr(3);
             location2 = findReg(line);
+            line = line.substr(0, 4);
             location3 = findReg(line);
-
-            memory[numPar[location3].second] = memory[numPar[location1].second] / memory[numPar[location2].second];
+            // saves into the designated register
+            memory[numPar[location3].second] = location1 / memory[numPar[location2].second];
             break;
 
         case 27:
         //%Mod
             line = line.substr(7);
-            location1 = findReg(line);
+            tempDigit = line.substr(0,2);
+            // only for integer for the first perameter
+            location1 = binaryConversion(tempDigit);
+            line = line.substr(3);
             location2 = findReg(line);
+            line = line.substr(0, 4);
             location3 = findReg(line);
-
-            memory[numPar[location3].second] = memory[numPar[location1].second] % memory[numPar[location2].second];
+            // saves into the designated register
+            memory[numPar[location3].second] = location1 + memory[numPar[location2].second];
 
             break;
 
         case 26:
         // ^Pow
             line = line.substr(7);
-            location1 = findReg(line);
+            tempDigit = line.substr(0,2);
+            // only for integer for the first perameter
+            location1 = binaryConversion(tempDigit);
+            line = line.substr(3);
             location2 = findReg(line);
+            line = line.substr(0, 4);
             location3 = findReg(line);
-
-            memory[numPar[location3].second] = pow(memory[numPar[location1].second], memory[numPar[location2].second]);
+            // saves into the designated register
+            memory[numPar[location3].second] = location1 + memory[numPar[location2].second];
             break;
 
         case 25:
@@ -552,9 +568,11 @@ void Syntasso::performCommand(int decimal, string line){
         //@Kyklo (Loop)
         // Sarah
 
-            line = line.substr(14,3); // we take away the command
+            // make a function to strip down all spaces so then it can be sent in correctly to binaryConversion
+            //cout << "Line passed in:_" << line << "_" << endl;
+            line = line.substr(14,5); // we take away the command
 
-             cout << "OG line: " << line << endl;
+            //cout << "OG line: " << line << "_" << endl;
             //
             // cout << "location 1: " << location1 << endl
             //     << "LINE: " << line << "test" << endl;
@@ -571,7 +589,7 @@ void Syntasso::performCommand(int decimal, string line){
             }
 
 
-            find(numPar[16].second, numPar[17].second, memory[2]);
+            //find(numPar[16].second, numPar[17].second, memory[2]);
 
             break;
 
