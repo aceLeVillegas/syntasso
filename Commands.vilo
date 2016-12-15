@@ -64,13 +64,9 @@ omega 15(1111)
 25(011001)
 Edo (signifies that there is a command being repeated)
 
-(Loads the value that is in the given register to the accumulator)
-
-~Fortono (First value is where the register will be stored in)
-
-(Stores the value that is in the accumulator into the given register)
+(Finds a value in the array if found returns a 1 if not returns 0)
 24(011000)
-#Kryvo (First value is where the register will be stored in)
+#Evrima (First value is where the target)
 
 (Will run though the given instructions followed)
 (if the line read in starts with -> it will signify that it is the start/end of the loop)
@@ -91,9 +87,9 @@ Edo (signifies that there is a command being repeated)
 20(010100)
 ?Lykis(First the value your checking against, Second choices for values: Neg 'N' , Pos 'P' , Zero 'Z')
 
-(moves to the desired location to read future commands)
+(Creates a start in an array and fills the array)
 19(010011)
-$Alma(Word for where you want to read commands in the list)
+~Kryvo (First value is the pointer you will be using to start your array)
 
 (Sets all register values to zero)
 18(010010)
