@@ -175,7 +175,7 @@ Syntasso::Syntasso(){
       if(word == binCode[i].first)
       {
         transToBin = binCode[i].second;
-        //cout << transToBin << endl;
+
       }
     }
 
@@ -184,7 +184,7 @@ Syntasso::Syntasso(){
 
 bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
-    //cout << "Command Order: " <<  commandOrder[usedC].first << endl;
+
     // If the line were reading in is a line within the loop
     if(word == "Edo" && whiteSpace == 0){
 
@@ -203,7 +203,7 @@ bool Syntasso::checkSyntax(std::string word, int &whiteSpace){
 
         if(whiteSpace == 1 && searchCom(word)){
 
-            //cout << "whiteSpace == 1" << word <<endl;
+
             whiteSpace--;
             parameters++;
 
@@ -348,19 +348,13 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
         while(getline(linestream,value, ' ' ))
 
         {
-            // /cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
-            //  << "whiteSpace: " << whiteSpace
-            //  << "parameters: " << parameters << endl << endl ;
+
           if(value.length() <= 4 && isdigit(value[0]))
           {
             temp = stoi(value);//if it's a string number convert it to an int
             assert(temp <= 256 && temp >=0);
             value = decimalToBinary(temp); //convert the int into a string binary
-            // for(int i = value.length(); i <= 4; ++i)
-            // {
-            //   //leadZero += '0';
-            // }
-            //value = leadZero + value;
+
             fout << value << " ";
           }
           else if(checkSyntax(value, whiteSpace))
@@ -432,12 +426,12 @@ void Syntasso::readBin(std::ifstream& inFile)
     //     cout << commandOrder[i].first << endl
     //     << commandOrder[i].second << endl;
     // }
-    //
-    // cout << endl << "usedC should == 7  " << usedC << endl;
+
 } // end readBin
 
 void Syntasso::performCommand(int decimal, string line){
-    string binary;
+    string binary,
+            tempDigit;
     int location1 = 0,
         location2 = 0,
         location3 = 0,
@@ -447,6 +441,7 @@ void Syntasso::performCommand(int decimal, string line){
         int temp;
 
     bool isThere;
+
 
     switch (decimal) {
 
@@ -460,8 +455,8 @@ void Syntasso::performCommand(int decimal, string line){
             line = line.substr(7,4);
             location1 = binaryConversion(line); // 13
 
-            cout << "Line is: " << line << endl
-                << "Sigma is: " << location1 << endl;
+            // cout << "Line is: " << line << endl
+            //     << "Sigma is: " << location1 << endl;
              cout << "Enter a value: ";
              cin >> value;
 
@@ -470,13 +465,25 @@ void Syntasso::performCommand(int decimal, string line){
 
         case 31:
         //+Add
+
             line = line.substr(7);
-            line = line.substr(0,2);
-            location1 = binaryConversion(line);
+
+            tempDigit = line.substr(0,2);
+
+            location1 = binaryConversion(tempDigit);
+
+
+            line = line.substr(3);
+
             location2 = findReg(line);
+            line = line.substr(0, 4);
+
+
             location3 = findReg(line);
 
-            memory[numPar[location3].second] = memory[numPar[location1].second] + memory[numPar[location2].second];
+
+            memory[numPar[location3].second] = location1 + memory[numPar[location2].second];
+
             break;
         case 30:
         // -Sub
@@ -589,7 +596,6 @@ void Syntasso::performCommand(int decimal, string line){
         // <Lego (Output)
             line = line.substr(7, 4);
             location1 = binaryConversion(line);
-            //cout << "Location 1: " << location1 << endl;
             cout << endl <<  memory[location1] << endl;
 
             break;
@@ -622,19 +628,9 @@ void Syntasso::performCommand(int decimal, string line){
             clearRegisters();
             break;
 
-          // case 17:
-          // // Deka
-          //
-          //     break;
-
-          case 16:
-          //Epis (chars)
-
-              break;
-
         default:
 
-            cout << "Invalid COmmand! What Happened?!" <<endl;
+            cout << "Invalid Command! What Happened?!" <<endl;
 
             break;
     }// end of switch
@@ -677,12 +673,13 @@ void Syntasso::clearRegisters(){
 int Syntasso::findReg(std::string& line)
 {
   string binValue = line.substr(0, 4);
+  //cout << "Current Line:_" << binValue << "_" <<  endl;
 
   for(int i = 0; i < CAPACITY; ++i)
   {
     if(binCode[i].second == binValue)
     {
-      line = line.substr(5);
+      //line = line.substr(5);
       return i;
     }
   }
@@ -745,9 +742,6 @@ void Syntasso::skip(int value, char state){
                 canSkip = true;
             }
             break;
-
-
-
     }
 
 }// end of skip()
@@ -772,25 +766,16 @@ void Syntasso::fillCommandOrder(std::ifstream& fin){
     {
 
         while(getline(fin, line)){
-        // take the first binary code and convert to a decimal number
-        decimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
-        if(line.length() > 0){
+            // take the first binary code and convert to a decimal number
+            decimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
+            if(line.length() > 0){
 
-            commandOrder[usedC].first = decimal;
-            //cout << "usedC " << usedC << endl;
-            //cout << "sentence" << sentence << endl;
-            //cout << "Line: " << line  << endl;
+                commandOrder[usedC].first = decimal;
+                line = line.substr(7); // gets rid of EDO when Passed into performCommand()
+                commandOrder[usedC].second = line;
 
-            line = line.substr(7); // gets rid of EDO when Passed into performCommand()
-
-
-            //cout << "usedC " << usedC << endl;
-            commandOrder[usedC].second = line;
-
-            usedC++;
-        }
-
-
+                usedC++;
+            }// end of if
         }// end of while
         fin.close();
     }// end of if
@@ -799,14 +784,13 @@ void Syntasso::fillCommandOrder(std::ifstream& fin){
         exit(1);
     }
 
-    //
+    // //
     // for(int i = 0; i < CAPACITY; i++ ){
     //
     //     cout << commandOrder[i].first << endl
     //     << commandOrder[i].second << endl;
     // }
-
-
+    //
     return;
 
 }
@@ -849,9 +833,7 @@ bool Syntasso::loopCommand(){
         for(size_t k = start; k <= end; k++ ){
 
             command = commandOrder[k].second.substr(0,6);
-
             decCom = binaryConversion(command);
-            //cout << "I'm on top" << endl;
             performCommand(decCom, commandOrder[k].second);
         }
     }
