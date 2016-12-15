@@ -26,6 +26,8 @@ class Syntasso{
         int stringtoAscii(std::string& word); //completed
         // Summary: Function will take a string that will be converted to its ascii value.
 
+        std::string decimalToBinary(int decimal);
+
         int binaryConversion(std::string binary);
         // Summary: Function will take a binary string that will be converted to its decimal value.
 

@@ -344,6 +344,8 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
   int whiteSpace = 0;
   string line;
   ofstream fout;
+  int temp;
+  string leadZero;
   fout.open("binCode.vilo",ios::out);
   if(inFile.is_open())
   {
@@ -368,7 +370,19 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
             // /cout << "Current word: " << value << " T/F: " <<checkSyntax(value, whiteSpace) << " "
             //  << "whiteSpace: " << whiteSpace
             //  << "parameters: " << parameters << endl << endl ;
-          if(checkSyntax(value, whiteSpace))
+          if(value.length() <= 4 && isdigit(value[0]))
+          {
+            temp = stoi(value);//if it's a string number convert it to an int
+            value = decimalToBinary(temp); //convert the int into a string binary
+            for(int i = value.length(); i <= 4; ++i)
+            {
+              leadZero += "0";
+            }
+            value = leadZero + value;
+            fout << value << " ";
+            cout << "test is digit**************" << endl;
+          }
+          else if(checkSyntax(value, whiteSpace))
           {
             value = stringToBin(value);
             fout << value << " ";
@@ -412,9 +426,9 @@ void Syntasso::readBin(std::ifstream& inFile)
     while(getline(inFile, line))
     {
       // take the first binary code and convert to a decimal number
-      binToDecimal = binaryConversion(line.substr(0,6));
-      binary = line.substr(0,6);
-      binaryInt = atoi(binary.c_str());
+      binToDecimal = binaryConversion(line.substr(0,6)); //This number will be sent to switch
+      binary = line.substr(0,6); //This is the string version of command
+      binaryInt = atoi(binary.c_str()); //This is the REAL binary number that will be stored in memory
       memory[commandCounter] = binaryInt;
       commandCounter++;
 
@@ -552,7 +566,7 @@ void Syntasso::performCommand(int decimal, string line){
         // #Evrima (Find)
             line = line.substr(7);
             location1 = findReg(line);
-            find(numPar[16].second, iterator, memory[numPar[location1].second]);
+            //find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
 
@@ -735,3 +749,26 @@ bool Syntasso::find(int& headPtr, int& tailPtr, int& target)
   }
   return isFound;
 }
+
+string Syntasso::decimalToBinary(int decimal)
+{
+  int remainder = 0;
+  int base = 2;
+  std::string bin = "";
+  int i = 0;
+  std::string reverse = "";
+  while(decimal > 0)
+  {
+    remainder = decimal % 2;
+    decimal = decimal / 2;
+
+    //std::cout << "decimal: " << decimal << std::endl;
+    std::cout << "remainder: " << remainder << std::endl;
+    bin += '0' + remainder;
+    i++;
+  } // end while
+  for(int i = bin.length(); i >= 0; i--)
+    reverse += bin[i];
+
+  return reverse;
+} // end decimalToBinary
