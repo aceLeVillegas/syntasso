@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <iomanip>
+#include <cassert>
 using namespace std;
 
 
@@ -373,6 +374,7 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
           if(value.length() <= 4 && isdigit(value[0]))
           {
             temp = stoi(value);//if it's a string number convert it to an int
+            assert(temp <= 256 && temp >=0);
             value = decimalToBinary(temp); //convert the int into a string binary
             for(int i = value.length(); i <= 4; ++i)
             {
@@ -566,7 +568,7 @@ void Syntasso::performCommand(int decimal, string line){
         // #Evrima (Find)
             line = line.substr(7);
             location1 = findReg(line);
-            //find(numPar[16].second, iterator, memory[numPar[location1].second]);
+            find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
 
