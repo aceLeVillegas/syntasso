@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
 
-  ifstream inFile("benchmark2.vilo");
+  ifstream inFile("benchmark1.vilo");
   ifstream fin("binCode.vilo");
   ifstream read("binCode.vilo");
 

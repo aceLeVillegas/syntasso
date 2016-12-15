@@ -790,11 +790,11 @@ void Syntasso::fillCommandOrder(std::ifstream& fin){
     }
 
     //
-    // for(int i = 0; i < CAPACITY; i++ ){
-    //
-    //     cout << commandOrder[i].first << endl
-    //     << commandOrder[i].second << endl;
-    // }
+    for(int i = 0; i < CAPACITY; i++ ){
+
+        cout << commandOrder[i].first << endl
+        << commandOrder[i].second << endl;
+    }
 
 
     return;
@@ -822,10 +822,6 @@ bool Syntasso::loopCommand(){
             end = i;
 
         }
-
-
-
-
 
     }// end of for
 
