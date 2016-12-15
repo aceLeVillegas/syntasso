@@ -3,7 +3,7 @@
 (3. ask user for a number to find in the array)
 (4. show message as to whether the number was found or not)
 
-@Kyklo Edo 5
+@Kyklo Edo 3
 Edo >Ako beta
 (will increment beta by one)
 Edo +Add 1 beta beta
@@ -13,3 +13,4 @@ Edo +Add 1 beta beta
 >Ako gamma
 (look for value in array)
 #Evrima gamma
+!Stasi

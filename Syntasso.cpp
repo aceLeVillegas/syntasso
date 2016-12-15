@@ -537,7 +537,7 @@ void Syntasso::performCommand(int decimal, string line){
         // #Evrima (Find)
             line = line.substr(7);
             location1 = findReg(line);
-            find(numPar[16].second, iterator, memory[numPar[location1].second]);
+            cout << find(numPar[16].second, iterator, memory[numPar[location1].second]);
 
             break;
 
@@ -682,6 +682,12 @@ int Syntasso::findReg(std::string& line)
 void Syntasso::displayMemory()
 {
 
+  // cout << "REGISTERS:\n";
+  // cout.width(25); cout << left << "accumulator " << right << showpos << setfill('0') << left << setw(5) << setfill(' ') << endl;
+  // cout.width(25); cout << left << "instructionCounter " << right << noshowpos << setw(5) << endl;
+  // cout.width(25); cout << left << "instructionRegister  " << right << showpos << setw(5) << endl;
+  // cout.width(25); cout << left << "operationCode " <<  right << noshowpos << setw(5) << endl;
+  // cout.width(25); cout << left << "operand  " << right << noshowpos << setw(5) << endl;
   cout << "\nMEMORY:" << endl << noshowpos;
 
 
