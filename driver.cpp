@@ -17,5 +17,10 @@ int main()
   test.readMnemonic(inFile);
   test.readBin(fin);
 
+  // string bin = "101101";
+  // long int binFinal;
+  // binFinal = atoi(bin.c_str());
+  // cout << "finalBin " << binFinal << endl;
+
   return EXIT_SUCCESS;
 }// end main

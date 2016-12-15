@@ -151,7 +151,7 @@ Syntasso::Syntasso(){
     // parameters it need since it hasnt seen the command yet
     parameters = -1;
     usedC = 0;
-    commandCounter = 0;
+    commandCounter = 15;
 
     for(size_t i = 0; i < CAPACITY; i++){
 
@@ -359,11 +359,10 @@ void Syntasso::readMnemonic(std::ifstream& inFile)
             value = decimalToBinary(temp); //convert the int into a string binary
             for(int i = value.length(); i <= 4; ++i)
             {
-              leadZero += "0";
+              leadZero += '0';
             }
             value = leadZero + value;
             fout << value << " ";
-            cout << "test is digit**************" << endl;
           }
           else if(checkSyntax(value, whiteSpace))
           {
@@ -446,12 +445,14 @@ void Syntasso::readBin(std::ifstream& inFile)
 } // end readBin
 
 void Syntasso::performCommand(int decimal, string line){
-
+    string binary;
     int location1 = 0,
         location2 = 0,
-        location3 = 0,
-        temp = 0,
-        value;
+        location3 = 0;
+    unsigned int finalBin;
+        int value;
+        int temp;
+
     bool isThere;
 
     switch (decimal) {
@@ -564,6 +565,11 @@ void Syntasso::performCommand(int decimal, string line){
             location1 = findReg(line);
             cout << "Enter an integer: (0 - 256)";
             cin >> temp;
+            binary = decimalToBinary(temp);
+            //cout << "binary " << binary << endl;
+
+            // finalBin = atoi(binary.c_str());
+            // cout << "finalBin " << atoi(binary.c_str()) << endl;
             memory[numPar[location1].second] = temp;
 
             break;
@@ -747,14 +753,14 @@ void Syntasso::fillCommandOrder(int decimal, std::string sentence){
 
 }
 
-bool Syntasso::loopCommand(){
-
-    size_t start = -1,
-            end = -1;
-
-    for(size_t i = 0; i < usedC)
-
-}
+// bool Syntasso::loopCommand(){
+//
+//     size_t start = -1,
+//             end = -1;
+//
+//     for(size_t i = 0; i < usedC)
+//
+// }
 
 
 string Syntasso::decimalToBinary(int decimal)
@@ -769,8 +775,6 @@ string Syntasso::decimalToBinary(int decimal)
     remainder = decimal % 2;
     decimal = decimal / 2;
 
-    //std::cout << "decimal: " << decimal << std::endl;
-    std::cout << "remainder: " << remainder << std::endl;
     bin += '0' + remainder;
     i++;
   } // end while
